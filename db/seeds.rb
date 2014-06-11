@@ -7,3 +7,8 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 Article.create(title: 'Welcome!',
                text: 'This is my first blog post in my new Ruby on Rails blog.')
+
+Article.create(title: 'Second post!',
+               text: 'This is the follow-on from the first post. The second post.')
+Article.create(title: 'Third post!',
+               text: 'And now here is the third post.')

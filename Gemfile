@@ -41,6 +41,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin]
 group :test do
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
+  gem 'launchy'
 end
 
 group :development, :test do
