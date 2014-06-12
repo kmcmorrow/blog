@@ -5,5 +5,5 @@ Feature: Display all published articles
 
   Scenario: View all articles
     Given there are 2 published articles
-    And I visit the homepage
+    When I visit the homepage
     Then I should see 2 articles
