@@ -1,3 +1,4 @@
 --color
---warnings
+#--warnings
+#--format progress
 --require spec_helper
