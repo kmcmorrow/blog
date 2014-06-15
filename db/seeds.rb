@@ -12,3 +12,7 @@ Article.create(title: 'Second post!',
                text: 'This is the follow-on from the first post. The second post.')
 Article.create(title: 'Third post!',
                text: 'And now here is the third post.')
+
+User.create(email: 'kevin@example.org',
+            password: 'secret',
+            password_confirmation: 'secret')

@@ -18,7 +18,25 @@ When(/^I click "(.*?)"$/) do |link|
   find_link(link).click
 end
 
-Then(/^I should be on login page$/) do
+Then(/^I should be on the (.*)$/) do |page|
   uri = URI.parse(current_url)
-  expect(uri.path).to eq('/login')
+  case page
+  when 'homepage'
+    expect(uri.path).to eq('/')
+  when 'login page'
+    expect(uri.path).to eq('/login')
+  end
+end
+
+Given(/^I am on the login page$/) do
+  visit '/login'
+end
+
+When(/^I fill in valid login details$/) do
+  fill_in 'Email', with: 'kevin@example.org'
+  fill_in 'Password', with: 'secret'
+end
+
+Then(/^I should see "(.*?)"$/) do |arg1|
+  pending # express the regexp above with the code you wish you had
 end
