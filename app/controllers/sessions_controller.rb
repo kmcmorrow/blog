@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
 
   end
 
-  def login
-
+  def create
+    redirect_to '/'
   end
 end
