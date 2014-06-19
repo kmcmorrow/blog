@@ -10,7 +10,7 @@ Feature: Login
 
   Scenario: Valid log in
     Given I am on the login page
+    And I have an account
     When I fill in valid login details
-    And I click "Log in"
     Then I should be on the homepage
-    And I should see "Logged in"
+    And I should see notice: "Logged in"

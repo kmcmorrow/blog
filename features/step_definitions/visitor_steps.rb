@@ -32,11 +32,17 @@ Given(/^I am on the login page$/) do
   visit '/login'
 end
 
-When(/^I fill in valid login details$/) do
-  fill_in 'Email', with: 'kevin@example.org'
-  fill_in 'Password', with: 'secret'
+Given(/^I have an account$/) do
+  user = FactoryGirl::create(:user)
 end
 
-Then(/^I should see "(.*?)"$/) do |arg1|
-  pending # express the regexp above with the code you wish you had
+When(/^I fill in valid login details$/) do
+  user = FactoryGirl::attributes_for(:user)
+  fill_in 'Email', with: user[:email]
+  fill_in 'Password', with: user[:password]
+  click_button 'Log in'
+end
+
+Then(/^I should see notice: "(.*?)"$/) do |message|
+  expect(page).to have_css('#notice', text: "#{message}")
 end
