@@ -36,11 +36,14 @@ RSpec.describe SessionsController, :type => :controller do
     end
 
     describe "with invalid details" do
-      before { post :create, session: { email: 'notauser@example.org',
-        password: 'badpassword' } }
+      before do
+        request.env["HTTP_REFERER"] = '/login'
+        post :create, session: { email: 'notauser@example.org',
+          password: 'badpassword' }
+      end
 
       it "should render login page" do
-        expect(response).to render_template(:new)
+        expect(response).to redirect_to(login_path)
       end
 
       it "should set flash message" do

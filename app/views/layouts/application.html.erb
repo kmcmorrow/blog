@@ -14,8 +14,11 @@
 				<li><%= link_to 'Log in', login_path %></li>
 			</ul>
 		</nav>
-		<div id="notice">
+		<div class="notice">
 			<%= notice %>
+		</div>
+		<div class="error">
+			<%= flash[:error] %>
 		</div>
 	</header>
 <%= yield %>

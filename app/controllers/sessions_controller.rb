@@ -1,6 +1,5 @@
 class SessionsController < ApplicationController
   def new
-
   end
 
   def create
@@ -11,7 +10,7 @@ class SessionsController < ApplicationController
       redirect_to :root
     else
       flash[:error] = 'Invalid login!'
-      render :new
+      redirect_to :back
     end
   end
 end
