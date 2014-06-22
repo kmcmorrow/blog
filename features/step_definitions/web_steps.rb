@@ -34,6 +34,12 @@ When(/^I fill in the wrong password$/) do
   click_button 'Log in'
 end
 
+When(/^I fill in the wrong email$/) do
+  fill_in 'Email', with: 'wrong@email.com'
+  fill_in 'Password', with: 'password'
+  click_button 'Log in'
+end
+
 Then(/^I should see (\d+) articles?$/) do |num_articles|
   Integer(num_articles).times do |n|
     expect(page).to have_css('h2', text: "Article#{n}")

@@ -20,4 +20,10 @@ Feature: Login
     And I have an account
     When I fill in the wrong password
     Then I should be on the login page
-    And I should see error: "Invalid login!"
+    And I should see error: "Invalid password!"
+
+  Scenario: Log in with wrong username
+    Given I am on the login page
+    When I fill in the wrong email
+    Then I should be on the login page
+    And I should see error: "User doesn't exist"

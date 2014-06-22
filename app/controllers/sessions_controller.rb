@@ -9,7 +9,11 @@ class SessionsController < ApplicationController
       flash[:notice] = 'Logged in.'
       redirect_to :root
     else
-      flash[:error] = 'Invalid login!'
+      if user
+        flash[:error] = 'Invalid password!'
+      else
+        flash[:error] = "User doesn't exist"
+      end
       redirect_to :back
     end
   end
