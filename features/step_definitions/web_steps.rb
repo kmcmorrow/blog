@@ -16,6 +16,12 @@ Given(/^I have an account$/) do
   user = FactoryGirl::create(:user)
 end
 
+Given(/^I am logged in$/) do
+  FactoryGirl::create(:user)
+  visit '/login'
+  step "I fill in valid login details"
+end
+
 When(/^I click "(.*?)"$/) do |link|
   find_link(link).click
 end
@@ -53,6 +59,8 @@ Then(/^I should be on the (.*)$/) do |page|
     expect(uri.path).to eq('/')
   when 'login page'
     expect(uri.path).to eq('/login')
+  when 'new article page'
+    expect(uri.path).to eq(new_article_path)
   end
 end
 

@@ -1,6 +1,6 @@
 Feature: Login
   As an admin
-  So that I can update the blog
+  So that I can administer the blog
   I want to login
 
   Scenario: Visit the log in page
