@@ -4,12 +4,15 @@ Given(/^there (?:are|is) (\d+) published articles?$/) do |num_articles|
   end
 end
 
-Given(/^I (?:am on|visit) the homepage$/) do
-  visit "/"
-end
-
-Given(/^I am on the login page$/) do
-  visit '/login'
+Given(/^I (?:am on|visit) (.*)$/) do |page|
+  case page
+  when 'the homepage'
+    visit "/"
+  when 'the login page'
+    visit '/login'
+  when 'the new article page'
+    visit '/articles/new'
+  end
 end
 
 Given(/^I have an account$/) do
@@ -44,6 +47,17 @@ When(/^I fill in the wrong email$/) do
   fill_in 'Email', with: 'wrong@email.com'
   fill_in 'Password', with: 'password'
   click_button 'Log in'
+end
+
+When(/^I add a new article$/) do
+  article = FactoryGirl::attributes_for(:article)
+  fill_in 'Title', with: article[:title]
+  fill_in 'Text', with: article[:text]
+  click_button 'Add article'
+end
+
+Then(/^I should see the new article$/) do
+  
 end
 
 Then(/^I should see (\d+) articles?$/) do |num_articles|

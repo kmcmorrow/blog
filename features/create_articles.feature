@@ -3,10 +3,16 @@ Feature: Create an article
   So that I can share content
   I want to create a new article
 
-  Scenario: Visit the new article page
+  Background:
     Given I am logged in
-    And I am on the homepage
-    And I click "Add Article"
+
+  Scenario: Visit the new article page
+    Given I am on the homepage
+    And I click "New Article"
     Then I should be on the new article page
-    
-    
+
+  Scenario: Add a new article
+    Given I am on the new article page
+    And I add a new article
+    Then I should be on the homepage
+    And I should see the new article

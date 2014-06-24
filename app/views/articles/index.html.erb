@@ -3,3 +3,7 @@
   <h2><%= article.title %></h2>
 	<%= article.text %>
 <% end %>
+<br><br>
+<% if signed_in? %>
+  <%= link_to 'New Article', new_article_path %>
+<% end %>
