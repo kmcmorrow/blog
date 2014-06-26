@@ -14,5 +14,5 @@ Feature: Create an article
   Scenario: Add a new article
     Given I am on the new article page
     And I add a new article
-    Then I should be on the homepage
+    Then I should be on the articles page
     And I should see the new article

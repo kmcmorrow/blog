@@ -12,6 +12,10 @@ Given(/^I (?:am on|visit) (.*)$/) do |page|
     visit '/login'
   when 'the new article page'
     visit '/articles/new'
+  when 'the articles page'
+    visit '/articles'
+  else
+    raise 'Unknown page'
   end
 end
 
@@ -56,14 +60,16 @@ When(/^I add a new article$/) do
   click_button 'Add article'
 end
 
-Then(/^I should see the new article$/) do
-  
-end
-
-Then(/^I should see (\d+) articles?$/) do |num_articles|
+Then(/^I should see (\d+) article(?:s)?$/) do |num_articles|
   Integer(num_articles).times do |n|
     expect(page).to have_css('h2', text: "Article#{n}")
   end
+end
+
+Then(/^I should see the new article$/) do
+  article = FactoryGirl::attributes_for(:article)
+  expect(page).to have_css('h2', text: article[:title])
+  expect(page).to have_content(article[:text])
 end
 
 Then(/^I should be on the (.*)$/) do |page|

@@ -27,8 +27,8 @@ RSpec.describe ArticlesController, :type => :controller do
 
   describe "POST create" do
     it "redirects to the index" do
-      post :create
-      expect(response).to redirect_to(:index)
+      post :create, article: { title: 'New article', text: 'Some text' }
+      expect(response).to redirect_to(:articles)
     end
 
     it "creates a new article" do
