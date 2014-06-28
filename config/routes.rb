@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   root 'articles#index'
 
   match '/login', to: 'sessions#new', via: 'get'
+  match '/logout', to: 'sessions#destroy', via: 'delete'
 
   
   # The priority is based upon order of creation: first created -> highest priority.

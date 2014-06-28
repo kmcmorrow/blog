@@ -14,6 +14,7 @@ Feature: Login
     When I fill in valid login details
     Then I should be on the homepage
     And I should see notice: "Logged in"
+    And I should see a "Log out" link
 
   Scenario: Log in with wrong password
     Given I am on the login page
@@ -27,3 +28,10 @@ Feature: Login
     When I fill in the wrong email
     Then I should be on the login page
     And I should see error: "User doesn't exist"
+
+  Scenario: Log out
+    Given I am logged in
+    When I click "Log out"
+    Then I should be on the homepage
+    And I should see notice: "Logged out"
+    And I should see a "Log in" link

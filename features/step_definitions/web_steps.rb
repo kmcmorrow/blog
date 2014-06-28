@@ -87,3 +87,7 @@ end
 Then(/^I should see (notice|error): "(.*?)"$/) do |type, message|
   expect(page).to have_css(".#{type}", text: "#{message}")
 end
+
+Then(/^I should see a "(.*?)" link$/) do |link|
+  pending
+end

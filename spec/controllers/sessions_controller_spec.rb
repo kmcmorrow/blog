@@ -26,15 +26,15 @@ RSpec.describe SessionsController, :type => :controller do
         expect(response).to redirect_to(:root)
       end
 
-      it "should put remember_token in cookie" do
-        expect(cookies[:remember_token]).to_not be_nil
+      it "should put remember_token in session" do
+        expect(session[:remember_token]).to_not be_nil
       end
 
       it "should set flash message" do
         expect(flash[:notice]).to eq('Logged in.')
       end
     end
-
+    
     describe "with invalid email" do
       before do
         request.env["HTTP_REFERER"] = '/login'
@@ -65,6 +65,22 @@ RSpec.describe SessionsController, :type => :controller do
       it "should set flash message" do
         expect(flash[:error]).to eq("Invalid password!")
       end
+    end
+  end
+
+  describe "DELETE destroy" do
+    it "should log the user out" do
+      # TODO: log in first
+      delete :destroy
+      
+      expect(session[:remember_token]).to be_blank
+      expect(assigns(:current_user)).to be_nil
+    end
+
+    it "should redirect to homepage" do
+      delete :destroy
+
+      expect(response).to redirect_to(root_path)
     end
   end
 end
