@@ -89,5 +89,5 @@ Then(/^I should see (notice|error): "(.*?)"$/) do |type, message|
 end
 
 Then(/^I should see a "(.*?)" link$/) do |link|
-  pending
+  expect(page).to have_link(link)
 end

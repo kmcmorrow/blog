@@ -17,4 +17,10 @@ class SessionsController < ApplicationController
       redirect_to :back
     end
   end
+
+  def destroy
+    sign_out
+    flash[:notice] = 'Logged out'
+    redirect_to root_path
+  end
 end

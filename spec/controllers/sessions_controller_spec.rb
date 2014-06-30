@@ -69,8 +69,13 @@ RSpec.describe SessionsController, :type => :controller do
   end
 
   describe "DELETE destroy" do
+    before do
+      user = FactoryGirl::create(:user)
+      post :create, session: { email: user.email,
+        password: user.password }
+    end
+    
     it "should log the user out" do
-      # TODO: log in first
       delete :destroy
       
       expect(session[:remember_token]).to be_blank
@@ -81,6 +86,12 @@ RSpec.describe SessionsController, :type => :controller do
       delete :destroy
 
       expect(response).to redirect_to(root_path)
+    end
+
+    it "should show flash message" do
+      delete :destroy
+
+      expect(flash[:notice]).to eq('Logged out')
     end
   end
 end
