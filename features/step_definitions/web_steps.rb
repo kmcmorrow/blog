@@ -29,6 +29,10 @@ Given(/^I am logged in$/) do
   step "I fill in valid login details"
 end
 
+When(/^I click on the article title$/) do
+  step 'I click "Article0"'
+end
+
 When(/^I click "(.*?)"$/) do |link|
   find_link(link).click
 end
@@ -66,6 +70,13 @@ Then(/^I should see (\d+) article(?:s)?$/) do |num_articles|
   end
 end
 
+Then(/^I should see the article$/) do
+  article = FactoryGirl::attributes_for(:article)
+  expect(page).to have_css('h2', text: article[:title] + '0')
+  expect(page).to have_content(article[:text])
+end
+
+
 Then(/^I should see the new article$/) do
   article = FactoryGirl::attributes_for(:article)
   expect(page).to have_css('h2', text: article[:title])
@@ -81,6 +92,8 @@ Then(/^I should be on the (.*)$/) do |page|
     expect(uri.path).to eq('/login')
   when 'new article page'
     expect(uri.path).to eq(new_article_path)
+  when 'article page'
+    expect(uri.path).to eq(article_path)
   end
 end
 
