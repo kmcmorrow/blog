@@ -4,8 +4,8 @@ Feature: View an article
   I want to view an individual article
 
   Scenario: View an article
-    Given I am on the homepage
-    And there is 1 published article
+    Given there is 1 published article
+    And I am on the homepage
     When I click on the article title
     Then I should be on the article page
     And I should see the article

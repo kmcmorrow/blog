@@ -72,7 +72,7 @@ end
 
 Then(/^I should see the article$/) do
   article = FactoryGirl::attributes_for(:article)
-  expect(page).to have_css('h2', text: article[:title] + '0')
+  expect(page).to have_css('h1', text: 'Article0')
   expect(page).to have_content(article[:text])
 end
 
@@ -93,7 +93,7 @@ Then(/^I should be on the (.*)$/) do |page|
   when 'new article page'
     expect(uri.path).to eq(new_article_path)
   when 'article page'
-    expect(uri.path).to eq(article_path)
+    expect(uri.path).to eq(article_path(1))
   end
 end
 
@@ -103,4 +103,8 @@ end
 
 Then(/^I should see a "(.*?)" link$/) do |link|
   expect(page).to have_link(link)
+end
+
+Then(/^show me the page$/) do
+  save_and_open_page
 end

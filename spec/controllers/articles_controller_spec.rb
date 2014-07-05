@@ -37,4 +37,19 @@ RSpec.describe ArticlesController, :type => :controller do
       end.to change(Article, :count).by(1)
     end
   end
+
+  describe "GET show" do
+    before do
+      article = FactoryGirl.create(:article)
+      get :show, id: article
+    end
+    
+    it "renders the show template" do
+      expect(response).to render_template(:show)
+    end
+
+    it "assigns the article" do
+      expect(assigns(:article)).to be_valid
+    end
+  end
 end
