@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :articles
+  resources :articles, except: [:update, :destroy, :update, :edit]
   resources :sessions, only: [:new, :create, :destroy]
   
   root 'articles#index'
