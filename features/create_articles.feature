@@ -16,3 +16,10 @@ Feature: Create an article
     And I add a new article
     Then I should be on the articles page
     And I should see the new article
+
+  Scenario: Redirect to login page when not logged in
+    Given I am on the homepage
+    And I log out
+    When I visit the new article page
+    Then I should be on the login page
+

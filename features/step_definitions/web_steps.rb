@@ -29,12 +29,16 @@ Given(/^I am logged in$/) do
   step "I fill in valid login details"
 end
 
+Given(/^I log out$/) do
+  click_link 'Log out'
+end
+
 When(/^I click on the article title$/) do
   step 'I click "Article0"'
 end
 
 When(/^I click "(.*?)"$/) do |link|
-  find_link(link).click
+  click_link link
 end
 
 When(/^I fill in valid login details$/) do
