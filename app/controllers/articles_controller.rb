@@ -1,4 +1,6 @@
 class ArticlesController < ApplicationController
+  before_action :require_login, only: [:new, :create]
+  
   def index
     @articles = Article.all
   end
@@ -24,5 +26,9 @@ class ArticlesController < ApplicationController
 
   def article_params
     params.require(:article).permit(:title, :text)
+  end
+
+  def require_login
+    redirect_to login_url unless signed_in?
   end
 end

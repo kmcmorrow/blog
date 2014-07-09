@@ -1,7 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe "Authorizations", :type => :request do
-  describe "When logged in" do
+  describe "when logged in" do
+    before do
+      @user = FactoryGirl::create(:user)
+      post sessions_path, session: {
+        email: @user.email,
+        password: @user.password
+      }
+    end
+    
     describe "ArticlesController" do
       describe "GET index" do
         it "shows the index" do
@@ -56,7 +64,7 @@ RSpec.describe "Authorizations", :type => :request do
     end
   end
 
-  describe "When not logged in" do
+  describe "when not logged in" do
     describe "ArticlesController" do
       describe "GET index" do
         it "shows the index" do
@@ -71,7 +79,6 @@ RSpec.describe "Authorizations", :type => :request do
         it "redirects to the login page" do
           get new_article_path
 
-          expect(response).to be_success
           expect(response).to redirect_to(login_path)
         end
       end
