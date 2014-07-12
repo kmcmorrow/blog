@@ -1,9 +1,20 @@
-<%= form_for(:session, url: sessions_path) do |f| %>
-  <%= f.label :email %>
-	<%= f.text_field :email %>
-	
-	<%= f.label :password %>
-	<%= f.password_field :password %>
-
-	<%= f.submit 'Log in' %>
+<%= form_for(:session, url: sessions_path,
+						 html: { class: 'form-horizontal', role: 'form' }) do |f| %>
+	<div class="form-group">
+		<%= f.label :email, class: 'col-sm-2 control-label' %>
+		<div class="col-sm-5">
+			<%= f.text_field :email, class: 'form-control' %>
+		</div>
+	</div>
+	<div class="form-group">
+		<%= f.label :password, class: 'col-sm-2 control-label' %>
+		<div class="col-sm-5">
+			<%= f.password_field :password, class: 'form-control' %>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-5">
+			<%= f.submit 'Log in', class: 'btn btn-default' %>
+		</div>
+	</div>
 <% end %>
