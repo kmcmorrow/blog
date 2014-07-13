@@ -9,14 +9,9 @@
 <body>
 	<%= render 'header' %>
 	<%= render 'navbar' %>
-	<div class="notice">
-		<%= notice %>
+	<div class="container-fluid">
+		<%= render 'messages' %>
+		<%= yield %>
 	</div>
-	<div class="error">
-		<%= flash[:error] %>
-	</div>
-
-	<%= yield %>
-
 </body>
 </html>
