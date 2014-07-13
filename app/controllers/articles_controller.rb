@@ -10,10 +10,18 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    article = Article.new(article_params)
-    if article.save
+    @article = Article.new(article_params)
+    if @article.save
+      flash[:success] = "Article created"
       redirect_to :articles
     else
+      flash.now[:error] ||= []
+      if @article.title.blank?
+        flash.now[:error] << "Title can't be blank"
+      end
+      if @article.text.blank?
+        flash.now[:error] << "Text can't be blank"
+      end
       render :new
     end
   end
