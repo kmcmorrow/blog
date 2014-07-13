@@ -40,7 +40,7 @@ RSpec.describe ArticlesController, :type => :controller do
 
       it "assigns a new article" do
         get :new
-        expect(assigns(:article)).to be_valid
+        expect(assigns(:article)).not_to be_nil
       end
     end
 
@@ -55,6 +55,23 @@ RSpec.describe ArticlesController, :type => :controller do
           post :create, article: { title: 'New article', text: 'Some text' }
         end.to change(Article, :count).by(1)
       end
+
+      describe "when no title" do
+        it "displays error message" do
+          post :create, article: { text: 'Some text' }
+          expect(response).to render_template(:new)
+          expect(flash[:error]).to include("Title can't be blank")
+        end
+      end
+
+      describe "when no text" do
+        it "displays error message" do
+          post :create, article: { title: 'Some title' }
+          expect(response).to render_template(:new)
+          expect(flash[:error]).to include("Text can't be blank")
+        end
+      end
+
     end
   end
 end
