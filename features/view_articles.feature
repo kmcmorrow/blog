@@ -4,9 +4,10 @@ Feature: View articles
   I want to be able to view articles
 
   Scenario: View all articles
-    Given there are 2 published articles
+    Given there are 3 published articles
     When I visit the homepage
-    Then I should see 2 articles
+    Then I should see 3 articles
+    And they should be sorted in reverse order of creation date
 
   Scenario: View an individual article
     Given there is 1 published article

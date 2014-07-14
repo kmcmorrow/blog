@@ -6,13 +6,14 @@ RSpec.describe ArticlesController, :type => :controller do
       get :index
       expect(response).to render_template(:index)
     end
+
     it "returns all articles" do
       FactoryGirl::create(:article)
       get :index
       expect(assigns(:articles).size).to eq(1)
     end
   end
-
+  
   describe "GET show" do
     before do
       article = FactoryGirl.create(:article)

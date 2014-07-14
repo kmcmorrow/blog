@@ -102,7 +102,7 @@ Then(/^I should be on the (.*)$/) do |page|
 end
 
 Then(/^I should see (notice|error): "(.*?)"$/) do |type, message|
-  expect(page).to have_css(".#{type}", text: "#{message}")
+  expect(page).to have_css(".alert", text: "#{message}")
 end
 
 Then(/^I should see a "(.*?)" link$/) do |link|
@@ -111,4 +111,8 @@ end
 
 Then(/^show me the page$/) do
   save_and_open_page
+end
+
+Then(/^they should be sorted in reverse order of creation date/) do
+  expect(page).to have_content(/Article2.*Article1.*Article0/m)
 end
