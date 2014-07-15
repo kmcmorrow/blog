@@ -1,6 +1,6 @@
 Given(/^there (?:are|is) (\d+) published articles?$/) do |num_articles|
   Integer(num_articles).times do |n| 
-    FactoryGirl.create(:article, title: "Article#{n}")
+    @articles = FactoryGirl.create(:article, title: "Article#{n}")
   end
 end
 
@@ -14,6 +14,8 @@ Given(/^I (?:am on|visit) (.*)$/) do |page|
     visit '/articles/new'
   when 'the articles page'
     visit '/articles'
+  when 'the article page'
+    visit '/articles/1'
   else
     raise 'Unknown page'
   end
@@ -105,8 +107,12 @@ Then(/^I should see (notice|error): "(.*?)"$/) do |type, message|
   expect(page).to have_css(".alert", text: "#{message}")
 end
 
-Then(/^I should see a "(.*?)" link$/) do |link|
-  expect(page).to have_link(link)
+Then(/^I should (not)? see a "(.*?)" link$/) do |not_see, link|
+  if not_see
+    expect(page).to_not have_link(link)
+  else
+    expect(page).to have_link(link)
+  end
 end
 
 Then(/^show me the page$/) do
