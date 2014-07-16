@@ -1,4 +1,5 @@
 require 'rails_helper'
+include SessionsHelper
 
 RSpec.describe ArticlesController, :type => :controller do
   describe "GET index" do
@@ -30,7 +31,6 @@ RSpec.describe ArticlesController, :type => :controller do
   end
 
   describe "when logged in" do
-    include SessionsHelper
     before { sign_in FactoryGirl::create(:user) }
     
     describe "GET new" do
@@ -78,6 +78,41 @@ RSpec.describe ArticlesController, :type => :controller do
           expect(response).to render_template(:new)
           expect(flash[:error]).to include("Text can't be blank")
         end
+      end
+    end
+  end
+
+  describe "DELETE destroy" do
+    before(:each) do
+      @article = FactoryGirl::create(:article)
+    end
+
+    describe "when not logged in" do
+      it "should not delete the article" do
+        expect { delete :destroy, id: @article }.to_not change(Article, :count)
+      end
+
+      it "should redirect to the homepage" do
+        delete :destroy, id: @article
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    describe "when logged in" do
+      before { sign_in FactoryGirl::create(:user) }
+      
+      it "should delete the article" do
+        expect { delete :destroy, id: @article }.to change(Article, :count).by(-1)
+      end
+
+      it "should redirect to the articles page" do
+        delete :destroy, id: @article
+        expect(response).to redirect_to(articles_path)
+      end
+
+      it "should show success message" do
+        delete :destroy, id: @article
+        expect(flash[:success]).to match('Article deleted')
       end
     end
   end

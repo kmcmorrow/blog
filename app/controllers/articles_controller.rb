@@ -30,6 +30,15 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id])
   end
 
+  def destroy
+    if signed_in?
+      Article.delete params[:id]
+      redirect_to articles_path, flash: { success: 'Article deleted' }
+    else
+      redirect_to root_path
+    end
+  end
+
   private
 
   def article_params

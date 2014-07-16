@@ -13,6 +13,6 @@ Feature: Delete an aricle
     And I am logged in
     When I visit the article page
     And I click "Delete article"
-    Then I should be on the homepage
+    Then I should be on the articles page
     And I should see 0 articles
     And I should see notice: "Article deleted"

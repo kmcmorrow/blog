@@ -93,9 +93,9 @@ Then(/^I should be on the (.*)$/) do |page|
   uri = URI.parse(current_url)
   case page
   when 'homepage'
-    expect(uri.path).to eq('/')
+    expect(uri.path).to eq(root_path)
   when 'login page'
-    expect(uri.path).to eq('/login')
+    expect(uri.path).to eq(login_path)
   when 'new article page'
     expect(uri.path).to eq(new_article_path)
   when 'article page'
@@ -107,7 +107,7 @@ Then(/^I should see (notice|error): "(.*?)"$/) do |type, message|
   expect(page).to have_css(".alert", text: "#{message}")
 end
 
-Then(/^I should (not)? see a "(.*?)" link$/) do |not_see, link|
+Then(/^I should( not)? see a "(.*?)" link$/) do |not_see, link|
   if not_see
     expect(page).to_not have_link(link)
   else
