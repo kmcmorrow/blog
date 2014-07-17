@@ -122,3 +122,19 @@ end
 Then(/^they should be sorted in reverse order of creation date/) do
   expect(page).to have_content(/Article2.*Article1.*Article0/m)
 end
+
+When(/^I click the "(.*?)" link$/) do |link|
+  click_link link
+end
+
+When(/^I fill in new article content$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+When(/^I click the "(.*?)" button$/) do |arg1|
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I should see the new article content$/) do
+  pending # express the regexp above with the code you wish you had
+end
