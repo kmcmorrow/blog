@@ -67,7 +67,7 @@ When(/^I add a new article$/) do
   article = FactoryGirl::attributes_for(:article)
   fill_in 'Title', with: article[:title]
   fill_in 'Text', with: article[:text]
-  click_button 'Add article'
+  click_button 'Create'
 end
 
 Then(/^I should see (\d+) article(?:s)?$/) do |num_articles|
