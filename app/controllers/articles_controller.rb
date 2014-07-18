@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  before_action :require_login, only: [:new, :create]
+  before_action :require_login, only: [:new, :create, :edit, :update]
   
   def index
     @articles = Article.all.order('created_at DESC')
@@ -27,6 +27,10 @@ class ArticlesController < ApplicationController
   end
 
   def show
+    @article = Article.find(params[:id])
+  end
+
+  def edit
     @article = Article.find(params[:id])
   end
 

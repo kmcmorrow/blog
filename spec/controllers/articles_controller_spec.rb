@@ -116,4 +116,37 @@ RSpec.describe ArticlesController, :type => :controller do
       end
     end
   end
+
+  describe "GET edit" do
+    describe "when logged in" do
+      before do
+        sign_in FactoryGirl::create(:user)
+        @article = FactoryGirl::create(:article) 
+      end
+      
+      it "renders the edit page" do
+        get :edit, id: @article
+        expect(response).to render_template(:edit)
+      end
+
+      it "assigns the article" do
+        get :edit, id: @article
+        expect(assigns(:article)).to eq(@article)
+      end
+    end
+
+    describe "when not logged in" do
+      before { @article = FactoryGirl::create(:article) }
+      
+      it "redirects to the homepage" do
+        get :edit, id: @article
+        expect(response).to redirect_to(login_path)
+      end
+
+      it "doesn't assign the article" do
+        get :edit, id: @article
+        expect(assigns(:article)).to be_nil
+      end
+    end
+  end
 end
