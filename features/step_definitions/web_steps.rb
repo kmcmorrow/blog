@@ -70,6 +70,19 @@ When(/^I add a new article$/) do
   click_button 'Create'
 end
 
+When(/^I click the "(.*?)" (link|button)/) do |name, thing|
+  if thing == 'link'
+    click_link name
+  elsif thing == 'button'
+    click_button name
+  end
+end
+
+When(/^I fill in new article content$/) do
+  fill_in 'Title', with: 'Updated title'
+  fill_in 'Text', with: 'Updated text'
+end
+
 Then(/^I should see (\d+) article(?:s)?$/) do |num_articles|
   Integer(num_articles).times do |n|
     expect(page).to have_css('h2', text: "Article#{n}")
@@ -123,18 +136,7 @@ Then(/^they should be sorted in reverse order of creation date/) do
   expect(page).to have_content(/Article2.*Article1.*Article0/m)
 end
 
-When(/^I click the "(.*?)" link$/) do |link|
-  click_link link
-end
-
-When(/^I fill in new article content$/) do
-  pending # express the regexp above with the code you wish you had
-end
-
-When(/^I click the "(.*?)" button$/) do |arg1|
-  pending # express the regexp above with the code you wish you had
-end
-
 Then(/^I should see the new article content$/) do
-  pending # express the regexp above with the code you wish you had
+  expect(page).to have_css('h1', text: 'Updated title')
+  expect(page).to have_content('Updated text')
 end

@@ -149,4 +149,82 @@ RSpec.describe ArticlesController, :type => :controller do
       end
     end
   end
+
+  describe "PUT update" do
+    before { @article = FactoryGirl::create(:article) }
+    
+    describe "when logged in" do
+      before { sign_in FactoryGirl::create(:user) }
+      
+      describe "successful update" do
+        before do
+          put :update, id: @article, article: { title: 'Updated Title',
+            text: 'Updated text' } 
+        end
+        
+        it "renders the article view" do
+          expect(response).to redirect_to(article_path(@article))
+        end
+
+        it "updates the article" do
+          updated_article = Article.find(@article.id)
+          expect(updated_article.title).to eq('Updated Title')
+          expect(updated_article.text).to eq('Updated text')
+        end
+
+        it "displays a success message" do
+          expect(flash[:success]).to eq('Article updated')
+        end
+      end
+
+      describe "fail to update" do
+        describe "when title is blank" do
+          before do 
+            put :update, id: @article.id, article: { title: '',
+              text: 'Updated text' }
+          end
+          
+          it "renders the edit view" do
+            expect(response).to render_template(:edit)
+          end
+
+          it "shows an error message" do
+            expect(flash[:error]).to include(/Title can't be blank/)
+          end
+        end
+
+        describe "when text is blank" do
+          before do
+            put :update, id: @article.id, article: { title: 'Updated Title',
+              text: '' }
+          end
+
+          it "renders the edit view" do
+            expect(response).to render_template(:edit)
+          end
+
+          it "shows an error message" do
+            expect(flash[:error]).to include(/Text can't be blank/)
+          end
+        end
+      end
+    end
+
+    describe "when not logged in" do
+      before do
+        put :update, id: @article.id, article: { title: 'Updated Title',
+          text: 'Updated text' } 
+      end
+
+      it "redirects to the login page" do
+        expect(response).to redirect_to(login_path)
+      end
+
+      it "doesn't change the article" do
+        updated_article = Article.find(@article.id)
+        expect(updated_article.title).to_not eq('Updated Title')
+        expect(updated_article.text).to_not eq('Updated text')
+      end
+    end
+  end
 end

@@ -34,6 +34,23 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id])
   end
 
+  def update
+    @article = Article.find(params[:id])
+    if @article.update_attributes(article_params)
+      flash[:success] = 'Article updated'
+      redirect_to @article
+    else
+      flash.now[:error] ||= []
+      if @article.title.blank?
+        flash.now[:error] << "Title can't be blank"
+      end
+      if @article.text.blank?
+        flash.now[:error] << "Text can't be blank"
+      end
+      render :edit
+    end
+  end
+
   def destroy
     if signed_in?
       Article.delete params[:id]
