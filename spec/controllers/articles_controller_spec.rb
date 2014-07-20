@@ -8,10 +8,10 @@ RSpec.describe ArticlesController, :type => :controller do
       expect(response).to render_template(:index)
     end
 
-    it "returns all articles" do
-      FactoryGirl::create(:article)
+    it "returns at most 5 articles" do
+      10.times { FactoryGirl::create(:article) }
       get :index
-      expect(assigns(:articles).size).to eq(1)
+      expect(assigns(:articles).size).to eq(5)
     end
   end
   
