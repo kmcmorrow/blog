@@ -70,7 +70,7 @@ When(/^I add a new article$/) do
   click_button 'Create'
 end
 
-When(/^I click the "(.*?)" (link|button)/) do |name, thing|
+When(/^I (?:click|press) the "(.*?)" (link|button)/) do |name, thing|
   if thing == 'link'
     click_link name
   elsif thing == 'button'
@@ -81,6 +81,14 @@ end
 When(/^I fill in new article content$/) do
   fill_in 'Title', with: 'Updated title'
   fill_in 'Text', with: 'Updated text'
+end
+
+When(/^I fill in a comment$/) do
+  fill_in 'Comment', with: 'Nice article!'
+end
+
+Then(/^I should see my comment$/) do
+  expect(page).to have_content('Nice article!')
 end
 
 Then(/^I should see (\d+) article(?:s)?$/) do |num_articles|
