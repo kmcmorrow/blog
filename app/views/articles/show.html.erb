@@ -1,11 +1,19 @@
-<h1><%= @article.title %></h1>
-<%= @article.text %>
+<article>
+	<h1><%= @article.title %></h1>
+	<%= @article.text %>
 
-<% if signed_in? %>
-	<br><br>
-	<%= link_to 'Edit article', edit_article_path(@article) %> | 
-	<%= link_to 'Delete article', @article, method: :delete,
+	<% if signed_in? %>
+		<br><br>
+		<%= link_to 'Edit article', edit_article_path(@article) %> | 
+		<%= link_to 'Delete article', @article, method: :delete,
     data: { confirm: 'Are you sure?' } %>
-<% end %>
-<br><br>
-<%= link_to "All articles", articles_path %>
+	<% end %>
+</article>
+<hr>
+<section>
+	<h2>Comments</h2>
+	<br>
+	<%= render @article.comments %>
+	<br>
+	<%= render 'comments/comment_form' %>
+</section>

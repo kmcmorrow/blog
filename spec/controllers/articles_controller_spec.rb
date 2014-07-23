@@ -17,8 +17,8 @@ RSpec.describe ArticlesController, :type => :controller do
   
   describe "GET show" do
     before do
-      article = FactoryGirl.create(:article)
-      get :show, id: article
+      @article = FactoryGirl.create(:article)
+      get :show, id: @article
     end
     
     it "renders the show template" do
@@ -27,6 +27,14 @@ RSpec.describe ArticlesController, :type => :controller do
 
     it "assigns the article" do
       expect(assigns(:article)).to be_valid
+    end
+
+    describe "article with comments" do
+      before { @article.comments.create name: 'Tester', text: 'Nice article' }
+      
+      it "assigns the comments" do
+        expect(assigns(:article).comments).to_not be_empty
+      end
     end
   end
 

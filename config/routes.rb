@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
-  resources :articles
+  resources :articles do
+    resources :comments, only: [:create]
+  end
   resources :sessions, only: [:new, :create, :destroy]
   
   root 'articles#index'

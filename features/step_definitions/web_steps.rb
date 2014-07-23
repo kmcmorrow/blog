@@ -84,10 +84,12 @@ When(/^I fill in new article content$/) do
 end
 
 When(/^I fill in a comment$/) do
-  fill_in 'Comment', with: 'Nice article!'
+  fill_in 'comment_name', with: 'Tester'
+  fill_in 'comment_text', with: 'Nice article!'
 end
 
 Then(/^I should see my comment$/) do
+  expect(page).to have_content('Tester')
   expect(page).to have_content('Nice article!')
 end
 
