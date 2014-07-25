@@ -1,8 +1,12 @@
 class CommentsController < ApplicationController
   def create
     @article = Article.find(params[:article_id])
-    @article.comments.create(comment_params)
-      
+    comment = @article.comments.create(comment_params)
+    if comment.invalid?
+      flash[:error] ||= []
+      flash[:error] << "Name can't be blank" if comment.name.blank?
+      flash[:error] << "Comment can't be blank" if comment.text.blank?
+    end
     redirect_to @article
   end
 
