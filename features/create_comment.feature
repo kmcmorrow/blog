@@ -12,3 +12,8 @@ Feature: Comment on article
     And I should see my comment
 
   Scenario: Try to add a blank comment
+    Given there is 1 published article
+    And I am on the article page
+    When I press the "Add Comment" button
+    Then I should be on the article page
+    And I should see error: "Comment can't be blank"
