@@ -1,4 +1,9 @@
 <h4><%= comment.name %></h4>
 <%= comment.text %>
+<br>
+<% if signed_in? %>
+	<%= link_to 'Delete', article_comment_path(@article.id, comment.id), method: :delete,
+  data: { confirm: 'Are you sure?' } %>
+<% end %>
 <br><br>
   
