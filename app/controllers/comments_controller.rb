@@ -1,4 +1,6 @@
 class CommentsController < ApplicationController
+  before_action :require_login, only: :destroy
+  
   def create
     @article = Article.find(params[:article_id])
     comment = @article.comments.create(comment_params)
@@ -10,6 +12,12 @@ class CommentsController < ApplicationController
     redirect_to @article
   end
 
+  def destroy
+    comment = Comment.find(params[:id])
+    comment.destroy
+    redirect_to article_path(params[:article_id])
+  end
+  
   private
 
   def comment_params
