@@ -16,6 +16,8 @@ Given(/^I (?:am on|visit) (.*)$/) do |page|
     visit '/articles'
   when 'the article page'
     visit '/articles/1'
+  when 'the categories page'
+    visit '/categories'
   else
     raise 'Unknown page'
   end
