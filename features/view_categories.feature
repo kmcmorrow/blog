@@ -5,5 +5,6 @@ Feature: View categories
 
 Scenario: View categories
     Given there are 5 categories
-    When I visit the categories page
+    And I am on the homepage
+    When I click "Categories"
     Then I should see 5 categories
