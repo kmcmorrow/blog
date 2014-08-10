@@ -15,3 +15,8 @@ Feature: View categories
     Given I am on the categories page
     When I click on a category
     Then I should see the articles in that category
+
+  Scenario: View all of an articles categories on an article page
+    Given there is an article with 3 categories
+    And I am on the article page
+    Then I should see the category names
