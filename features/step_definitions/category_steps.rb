@@ -1,13 +1,16 @@
 Given(/^there are (#{NUMBER}) categories$/) do |num_categories|
+  @categories = []
   num_categories.times do |n|
-    FactoryGirl::create(:category,  name: "Category #{n}")
+    category = FactoryGirl::create(:category,  name: "Category #{n}")
+    category.articles << FactoryGirl::create(:article)
+    @categories << category
   end
 end
 
 Given(/^there is an article with (\d+) categories$/) do |num_categories|
-  article = FactoryGirl::create(:article)
+  @article = FactoryGirl::create(:article, title: 'Article with categories')
   3.times do |num|
-    article.categories << FactoryGirl::create(:category, name: "Category#{num}")
+    @article.categories << FactoryGirl::create(:category, name: "Category #{num}")
   end
 end
 
@@ -22,9 +25,14 @@ Then(/^I should see (#{NUMBER}) categories$/) do |num_categories|
 end
 
 Then(/^I should see the articles in that category$/) do
-  pending
+  @categories.first.articles.each do |article|
+    expect(page).to have_content(article.title)
+    expect(page).to have_content(article.text)
+  end
 end
 
-Then(/^I should see the category names$/) do
-  pending
+Then(/^I should see links to the categories$/) do
+  3.times do |num|
+    expect(page).to have_link("Category #{num}")
+  end
 end

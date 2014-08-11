@@ -18,5 +18,5 @@ Feature: View categories
 
   Scenario: View all of an articles categories on an article page
     Given there is an article with 3 categories
-    And I am on the article page
-    Then I should see the category names
+    When I visit the article page
+    Then I should see links to the categories
