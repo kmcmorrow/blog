@@ -1,16 +1,19 @@
 Rails.application.routes.draw do
 
+  get 'categories/index'
+
   resources :articles do
     resources :comments, only: [:create, :destroy]
   end
   resources :sessions, only: [:new, :create, :destroy]
+  resources :categories, only: [:index, :show]
   
   root 'articles#index'
 
   match '/login', to: 'sessions#new', via: 'get'
   match '/logout', to: 'sessions#destroy', via: 'delete'
-
   
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

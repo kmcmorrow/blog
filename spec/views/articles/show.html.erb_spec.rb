@@ -62,4 +62,18 @@ RSpec.describe "articles/show", :type => :view do
       end
     end
   end
+
+  describe "with categories" do
+    before do
+      article.categories << FactoryGirl::create(:category)
+    end
+    
+    it "shows the articles categories" do
+      render
+      article.categories.each do |category|
+        expect(rendered).to have_link(category.name,
+                                      href: category_path(category))
+      end
+    end
+  end
 end

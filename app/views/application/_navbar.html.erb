@@ -12,6 +12,9 @@
 		</div>
 
 		<div class="collapse navbar-collapse" id="navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li><a href="<%= categories_path %>">Categories</a></li>
+			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="<%= 'active' if current_page?(login_path) %>">
 					<% if signed_in? %>
