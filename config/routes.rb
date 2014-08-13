@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :destroy]
   end
   resources :sessions, only: [:new, :create, :destroy]
-  resources :categories, only: [:index, :show]
+  resources :categories, only: [:index, :show, :new, :create]
   
   root 'articles#index'
 
