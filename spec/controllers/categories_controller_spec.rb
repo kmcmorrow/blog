@@ -28,4 +28,21 @@ RSpec.describe CategoriesController, :type => :controller do
       expect(assigns(:category).articles.size).to eq(Category.find(1).articles.count)
     end
   end
+
+  describe "GET new" do
+    it "returns http success" do
+      get 'new'
+      expect(response).to be_success
+    end
+
+    it "renders the new view" do
+      get 'new'
+      expect(response).to render_template(:new)
+    end
+
+    it "assigns a new category" do
+      get 'new'
+      expect(assigns(:category)).to_not be_nil
+    end
+  end
 end
