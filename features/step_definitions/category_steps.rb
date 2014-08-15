@@ -10,7 +10,7 @@ end
 Given(/^there is an article with (\d+) categories$/) do |num_categories|
   @article = FactoryGirl::create(:article, title: 'Article with categories')
   3.times do |num|
-    @article.categories << FactoryGirl::create(:category, name: "Category #{num}")
+    @article.categories << @categories[num]
   end
 end
 
@@ -39,8 +39,8 @@ end
 
 When(/^I create a new category$/) do
   click_link 'Add category'
-  fill_in 'Name', 'New Category'
-  click_button 'Create category'
+  fill_in 'Name', with: 'New Category'
+  click_button 'Create Category'
 end
 
 Then(/^I should see the new category$/) do

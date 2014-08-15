@@ -18,4 +18,13 @@ RSpec.describe Category, :type => :model do
       expect(category).to_not be_valid
     end
   end
+
+  describe "with duplicate name" do
+    before { FactoryGirl::create(:category) }
+
+    it "should not be valid" do
+      category = Category.create(name: FactoryGirl::attributes_for(:category)[:name])
+      expect(category).to_not be_valid
+    end
+  end
 end

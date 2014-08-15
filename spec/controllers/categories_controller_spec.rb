@@ -45,4 +45,47 @@ RSpec.describe CategoriesController, :type => :controller do
       expect(assigns(:category)).to_not be_nil
     end
   end
+
+  describe "POST create" do
+    it "redirects to categories page" do
+      post 'create', category: { name: 'New Category'}
+      expect(response).to redirect_to(categories_path)
+    end
+
+    it "creates a new category" do
+      expect { post 'create', category: { name: 'New Category' } }
+        .to change(Category, :count).by(1)
+    end
+
+    describe "when no name given" do
+      before { post 'create', category: { name: '' } }
+
+      it "renders the new category page" do
+        expect(response).to render_template(:new)
+      end
+
+      it "has error message" do
+        expect(flash[:error]).to include('Name cannot be blank')
+      end
+
+      it "doesn't create a new category" do
+        expect { post 'create', category: { name: ''} }
+          .to_not change(Category, :count)
+      end
+    end
+
+    describe "when name is not unique" do
+      before { @category = FactoryGirl::create(:category) }
+
+      it "doesn't create a new category" do
+        expect { post 'create', category: { name: @category.name } }
+          .to_not change(Category, :count)
+      end
+
+      it "has error message" do
+        post 'create', category: { name: @category.name }
+        expect(flash[:error]).to include('Category already exists')
+      end
+    end
+  end
 end
