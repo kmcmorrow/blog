@@ -1,4 +1,4 @@
-Given(/^there are (#{NUMBER}) categories$/) do |num_categories|
+Given(/^there (?:are|is) (#{NUMBER}) categor(?:y|ies)$/) do |num_categories|
   @categories = []
   num_categories.times do |n|
     category = FactoryGirl::create(:category,  name: "Category #{n}")
@@ -45,4 +45,12 @@ end
 
 Then(/^I should see the new category$/) do
   expect(page).to have_link('New Category', category_path(Category.last))
+end
+
+When(/^I change the category name$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I should see the new category name$/) do
+  pending # express the regexp above with the code you wish you had
 end
