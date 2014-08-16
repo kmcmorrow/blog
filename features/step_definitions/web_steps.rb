@@ -154,3 +154,7 @@ Then(/^I should see the new article content$/) do
   expect(page).to have_css('h1', text: 'Updated title')
   expect(page).to have_content('Updated text')
 end
+
+Then(/^I should see the message: "(.*?)"$/) do |message|
+  expect(page).to have_content(message)  
+end

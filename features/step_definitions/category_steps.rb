@@ -37,6 +37,11 @@ Then(/^I should see links to the categories$/) do
   end
 end
 
+When(/^I create a new category with an existing name$/) do
+  FactoryGirl::create(:category, name: 'New Category')
+  step 'I create a new category'
+end
+
 When(/^I create a new category$/) do
   click_link 'Add category'
   fill_in 'Name', with: 'New Category'
