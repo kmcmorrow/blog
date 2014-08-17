@@ -48,7 +48,8 @@ Then(/^I should see the new category$/) do
 end
 
 When(/^I change the category name$/) do
-  pending # express the regexp above with the code you wish you had
+  fill_in 'Name', with: 'New Name'
+  click_button 'Update Category'
 end
 
 Then(/^I should see the new category name$/) do

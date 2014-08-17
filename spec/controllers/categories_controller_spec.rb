@@ -88,4 +88,18 @@ RSpec.describe CategoriesController, :type => :controller do
       end
     end
   end
+
+  describe "GET edit" do
+    before { FactoryGirl::create(:category) }
+
+    it "renders the edit page" do
+      get 'edit'
+      expect(response).to render_template(:edit)
+    end
+    
+    it "assigns the category" do
+      get 'edit'
+      expect(assigns(:category)).to_not be_nil
+    end
+  end
 end

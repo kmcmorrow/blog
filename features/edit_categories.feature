@@ -3,6 +3,9 @@ Feature: Edit a category
   In order to give relevant names to categories
   I would like to edit a category's name
 
+  Background:
+    Given I am logged in
+
   Scenario: Rename a category
     Given there is 1 category
     And I am on the categories page
