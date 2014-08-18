@@ -90,16 +90,54 @@ RSpec.describe CategoriesController, :type => :controller do
   end
 
   describe "GET edit" do
-    before { FactoryGirl::create(:category) }
+    before { @category = FactoryGirl::create(:category) }
 
     it "renders the edit page" do
-      get 'edit'
+      get 'edit', id: @category
       expect(response).to render_template(:edit)
     end
     
     it "assigns the category" do
-      get 'edit'
-      expect(assigns(:category)).to_not be_nil
+      get 'edit', id: @category
+      expect(assigns(:category)).to eq(@category)
+    end
+  end
+
+  describe "PUT update" do
+    before { @category = FactoryGirl::create(:category) }
+
+    it "redirects to the categories page" do
+      put 'update', id: @category
+      expect(response).to redirect_to(categories_path)
+    end
+
+    it "updates the category name" do
+      put 'update', id: @category
+      expect(@category.name).to eq('New Category')
+    end
+
+    describe "when new name is blank" do
+      it "renders the edit page" do
+        put 'update', id: @category
+        expect(response).to render_template(:edit)
+      end
+      
+      it "shows error message" do
+        put 'update', id: @category
+        expect(flash[:error]).to include('Name cannot be blank')
+      end
+    end
+
+    describe "when new name is taken" do
+      it "renders the edit page" do
+        put 'update', id: @category
+        expect(response).to render_template(:edit)
+      end
+      
+      it "shows error message" do
+        put 'update', id: @category
+        expect(flash[:error]).to include('Category already exists')
+      end
     end
   end
 end
