@@ -29,7 +29,14 @@ RSpec.describe "categories/index.html.erb", :type => :view do
       it "should show edit links for each category" do
         render
         @categories.each do |category|
-          expect(rendered).to have_link('Edit', edit_category_path(category.id))
+          expect(rendered).to have_link('Edit', edit_category_path(category))
+        end
+      end
+
+      it "should show delete links for each category" do
+        render
+        @categories.each do |category|
+          expect(rendered).to have_link('Delete', category_path(category))
         end
       end
     end
@@ -45,7 +52,7 @@ RSpec.describe "categories/index.html.erb", :type => :view do
         render
         @categories.each do |category|
           expect(rendered).to_not have_link('Edit', edit_category_path(category.id))
-        end
       end
+    end
   end
 end

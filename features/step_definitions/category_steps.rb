@@ -55,3 +55,11 @@ end
 Then(/^I should see the new category name$/) do
   expect(page).to have_content('New Name')
 end
+
+Then(/^there should be (\d+) categor(?:y|ies)$/) do |number|
+  expect(Category.count).to eq(number)
+end
+
+Then(/^I should not see the category name$/) do
+  expect(page).to_not have_content(FactoryGirl::attributes_for(:category)[:name])
+end

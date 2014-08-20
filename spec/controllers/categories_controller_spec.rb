@@ -145,4 +145,19 @@ RSpec.describe CategoriesController, :type => :controller do
       end
     end
   end
+
+  describe "DELETE destroy" do
+    before { @category = FactoryGirl::create(:category) }
+
+    it "redirects to the categories page" do
+      delete 'destroy', id: @category
+      expect(response).to redirect_to(categories_path)
+    end
+
+    it "deletes the category" do
+      expect do
+        delete 'destroy', id: @category
+      end.to change(Category, :count).by(-1)
+    end
+  end
 end
