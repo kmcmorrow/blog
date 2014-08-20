@@ -106,37 +106,42 @@ RSpec.describe CategoriesController, :type => :controller do
   describe "PUT update" do
     before { @category = FactoryGirl::create(:category) }
 
-    it "redirects to the categories page" do
-      put 'update', id: @category
-      expect(response).to redirect_to(categories_path)
-    end
+    describe "when successful update" do
+      before { put 'update', id: @category, category: { name: 'New Name' } }
 
-    it "updates the category name" do
-      put 'update', id: @category
-      expect(@category.name).to eq('New Category')
-    end
+      it "redirects to the categories page" do
+        expect(response).to redirect_to(categories_path)
+      end
 
+      it "updates the category name" do
+        expect(@category.reload.name).to eq('New Name')
+      end
+    end
+    
     describe "when new name is blank" do
+      before { put 'update', id: @category, category: { name: '' } }
+      
       it "renders the edit page" do
-        put 'update', id: @category
         expect(response).to render_template(:edit)
       end
       
       it "shows error message" do
-        put 'update', id: @category
-        expect(flash[:error]).to include('Name cannot be blank')
+        expect(flash[:error]).to include("Name can't be blank")
       end
     end
 
     describe "when new name is taken" do
+      before do
+        existing_category = FactoryGirl::create(:category, name: 'Existing')
+        put 'update', id: @category, category: { name: existing_category.name }
+      end
+      
       it "renders the edit page" do
-        put 'update', id: @category
         expect(response).to render_template(:edit)
       end
       
       it "shows error message" do
-        put 'update', id: @category
-        expect(flash[:error]).to include('Category already exists')
+        expect(flash[:error]).to include('Name has already been taken')
       end
     end
   end

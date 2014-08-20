@@ -53,5 +53,5 @@ When(/^I change the category name$/) do
 end
 
 Then(/^I should see the new category name$/) do
-  pending # express the regexp above with the code you wish you had
+  expect(page).to have_content('New Name')
 end

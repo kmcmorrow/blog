@@ -31,6 +31,19 @@ class CategoriesController < ApplicationController
   end
 
   def update
+    @category = Category.find(params[:id])
+    if @category.update_attributes(category_params)
+      redirect_to categories_path
+    else
+      flash.now[:error] ||= []
+      @category.errors.each do |attribute|
+        @category.errors[attribute].each do |error| 
+          flash.now[:error] << "#{attribute.capitalize} #{error}"
+        end
+      end
+
+      render :edit
+    end
   end
 
   private
