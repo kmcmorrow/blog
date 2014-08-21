@@ -1,4 +1,4 @@
-Given(/^there are (#{NUMBER}) categories$/) do |num_categories|
+Given(/^there (?:are|is) (#{NUMBER}) categor(?:y|ies)$/) do |num_categories|
   @categories = []
   num_categories.times do |n|
     category = FactoryGirl::create(:category,  name: "Category #{n}")
@@ -43,11 +43,28 @@ When(/^I create a new category with an existing name$/) do
 end
 
 When(/^I create a new category$/) do
-  click_link 'Add category'
-  fill_in 'Name', with: 'New Category'
+  click_link 'New category'
+  fill_in 'Name', with: 'New Category Name'
   click_button 'Create Category'
 end
 
 Then(/^I should see the new category$/) do
-  expect(page).to have_link('New Category', category_path(Category.last))
+  expect(page).to have_link('New Category Name', category_path(Category.last))
+end
+
+When(/^I change the category name$/) do
+  fill_in 'Name', with: 'New Name'
+  click_button 'Update Category'
+end
+
+Then(/^I should see the new category name$/) do
+  expect(page).to have_content('New Name')
+end
+
+Then(/^there should be (\d+) categor(?:y|ies)$/) do |number|
+  expect(Category.count).to eq(number)
+end
+
+Then(/^I should not see the category name$/) do
+  expect(page).to_not have_content(FactoryGirl::attributes_for(:category)[:name])
 end

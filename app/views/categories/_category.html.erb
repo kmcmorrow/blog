@@ -1,1 +1,6 @@
-<%= link_to category.name, category %><br>
+<%= link_to category.name, category %> 
+<% if signed_in? %>
+	(<%= link_to 'Edit', edit_category_path(category) %> |
+	<%= link_to 'Delete', category_path(category), method: :delete %>)
+<% end %>
+<br>

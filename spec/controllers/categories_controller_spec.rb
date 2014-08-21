@@ -88,4 +88,81 @@ RSpec.describe CategoriesController, :type => :controller do
       end
     end
   end
+
+  describe "GET edit" do
+    before { @category = FactoryGirl::create(:category) }
+
+    it "renders the edit page" do
+      get 'edit', id: @category
+      expect(response).to render_template(:edit)
+    end
+    
+    it "assigns the category" do
+      get 'edit', id: @category
+      expect(assigns(:category)).to eq(@category)
+    end
+  end
+
+  describe "PUT update" do
+    before { @category = FactoryGirl::create(:category) }
+
+    describe "when successful update" do
+      before { put 'update', id: @category, category: { name: 'New Name' } }
+
+      it "redirects to the categories page" do
+        expect(response).to redirect_to(categories_path)
+      end
+
+      it "updates the category name" do
+        expect(@category.reload.name).to eq('New Name')
+      end
+    end
+    
+    describe "when new name is blank" do
+      before { put 'update', id: @category, category: { name: '' } }
+      
+      it "renders the edit page" do
+        expect(response).to render_template(:edit)
+      end
+      
+      it "shows error message" do
+        expect(flash[:error]).to include("Name can't be blank")
+      end
+    end
+
+    describe "when new name is taken" do
+      before do
+        existing_category = FactoryGirl::create(:category, name: 'Existing')
+        put 'update', id: @category, category: { name: existing_category.name }
+      end
+      
+      it "renders the edit page" do
+        expect(response).to render_template(:edit)
+      end
+      
+      it "shows error message" do
+        expect(flash[:error]).to include('Name has already been taken')
+      end
+    end
+  end
+
+  describe "DELETE destroy" do
+    before { @category = FactoryGirl::create(:category) }
+
+    it "redirects to the categories page" do
+      delete 'destroy', id: @category
+      expect(response).to redirect_to(categories_path)
+    end
+
+    it "deletes the category" do
+      expect do
+        delete 'destroy', id: @category
+      end.to change(Category, :count).by(-1)
+    end
+
+    it "shows success message" do
+      delete 'destroy', id: @category
+      expect(flash[:notice]).to match('Category deleted')
+    end
+  end
 end
