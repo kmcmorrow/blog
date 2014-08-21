@@ -38,13 +38,13 @@ Then(/^I should see links to the categories$/) do
 end
 
 When(/^I create a new category$/) do
-  click_link 'Add category'
-  fill_in 'Name', with: 'New Category'
+  click_link 'New category'
+  fill_in 'Name', with: 'New Category Name'
   click_button 'Create Category'
 end
 
 Then(/^I should see the new category$/) do
-  expect(page).to have_link('New Category', category_path(Category.last))
+  expect(page).to have_link('New Category Name', category_path(Category.last))
 end
 
 When(/^I change the category name$/) do

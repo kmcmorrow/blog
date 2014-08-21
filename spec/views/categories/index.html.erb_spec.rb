@@ -23,7 +23,7 @@ RSpec.describe "categories/index.html.erb", :type => :view do
       
       it "should show add category link" do
         render
-        expect(rendered).to have_link('Add category', new_category_path)
+        expect(rendered).to have_link('New category', new_category_path)
       end
 
       it "should show edit links for each category" do
