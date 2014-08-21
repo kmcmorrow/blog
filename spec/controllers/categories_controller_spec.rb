@@ -159,5 +159,10 @@ RSpec.describe CategoriesController, :type => :controller do
         delete 'destroy', id: @category
       end.to change(Category, :count).by(-1)
     end
+
+    it "shows success message" do
+      delete 'destroy', id: @category
+      expect(flash[:notice]).to match('Category deleted')
+    end
   end
 end
