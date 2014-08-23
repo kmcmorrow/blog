@@ -11,6 +11,15 @@ class ArticlesController < ApplicationController
 
   def create
     @article = Article.new(article_params)
+
+    if params[:article][:categories]
+      category_ids = params[:article][:categories].reject(&:empty?).map(&:to_i)
+      category_ids.each do |category_id|
+        category = Category.find(category_id.to_i)
+        @article.categories << category
+      end
+    end
+    
     if @article.save
       flash[:success] = "Article created"
       redirect_to :articles

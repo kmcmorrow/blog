@@ -38,54 +38,66 @@ RSpec.describe ArticlesController, :type => :controller do
     end
   end
 
-  describe "when logged in" do
+  describe "GET new" do
     before { sign_in FactoryGirl::create(:user) }
-    
-    describe "GET new" do
-      it "renders the correct template" do
-        get :new
-        expect(response).to render_template(:new)
+
+    it "renders the correct template" do
+      get :new
+      expect(response).to render_template(:new)
+    end
+
+    it "assigns a new article" do
+      get :new
+      expect(assigns(:article)).not_to be_nil
+    end
+  end
+
+  describe "POST create" do
+    before { sign_in FactoryGirl::create(:user) }
+
+    describe "when successful" do
+      it "redirects to the index" do
+        post :create, article: { title: 'New article', text: 'Some text' }
+        expect(response).to redirect_to(:articles)
       end
 
-      it "assigns a new article" do
-        get :new
-        expect(assigns(:article)).not_to be_nil
+      it "creates a new article" do
+        expect do
+          post :create, article: { title: 'New article', text: 'Some text' }
+        end.to change(Article, :count).by(1)
+      end
+
+
+      describe "when assigning categories" do
+        before { 2.times { |n| FactoryGirl::create(:category) } }
+        
+        it "assigns categories to article" do
+          post :create, article: { title: 'New article', text: 'Some text',
+            categories: ['1', '2'] }
+
+          expect(Article.first.categories.count).to eq(2)
+        end
+      end
+
+      it "displays a success message" do
+        post :create, article: { title: 'New article', text: 'Some text' }
+        expect(flash[:success]).to match("Article created")
+      end
+    end
+    
+    describe "when no title" do
+      it "displays error message" do
+        post :create, article: { text: 'Some text' }
+        expect(response).to render_template(:new)
+        expect(flash[:error]).to include("Title can't be blank")
       end
     end
 
-    describe "POST create" do
-      describe "when successful" do
-        it "redirects to the index" do
-          post :create, article: { title: 'New article', text: 'Some text' }
-          expect(response).to redirect_to(:articles)
-        end
-
-        it "creates a new article" do
-          expect do
-            post :create, article: { title: 'New article', text: 'Some text' }
-          end.to change(Article, :count).by(1)
-        end
-
-        it "displays a success message" do
-          post :create, article: { title: 'New article', text: 'Some text' }
-          expect(flash[:success]).to match("Article created")
-        end
-      end
-      
-      describe "when no title" do
-        it "displays error message" do
-          post :create, article: { text: 'Some text' }
-          expect(response).to render_template(:new)
-          expect(flash[:error]).to include("Title can't be blank")
-        end
-      end
-
-      describe "when no text" do
-        it "displays error message" do
-          post :create, article: { title: 'Some title' }
-          expect(response).to render_template(:new)
-          expect(flash[:error]).to include("Text can't be blank")
-        end
+    describe "when no text" do
+      it "displays error message" do
+        post :create, article: { title: 'Some title' }
+        expect(response).to render_template(:new)
+        expect(flash[:error]).to include("Text can't be blank")
       end
     end
   end
