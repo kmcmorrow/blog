@@ -74,6 +74,18 @@ When(/^I add a new article$/) do
   click_button 'Create'
 end
 
+Given(/^I add a new article in a category$/) do
+  article = FactoryGirl::attributes_for(:article)
+  fill_in 'Title', with: 'Article with Category'
+  fill_in 'Text', with: article[:text]
+  select(Category.first.name, from: 'Categories')
+  click_button 'Create'
+end
+
+When(/^I click on the article$/) do
+  click_link 'Article with Category'
+end
+
 When(/^I (?:click|press) the "(.*?)" (link|button)/) do |name, thing|
   if thing == 'link'
     click_link name
@@ -157,4 +169,8 @@ end
 
 Then(/^I should see the message: "(.*?)"$/) do |message|
   expect(page).to have_content(message)  
+end
+
+Then(/^I should see the article's category$/) do
+  expect(page).to have_link(Category.first.name)
 end
