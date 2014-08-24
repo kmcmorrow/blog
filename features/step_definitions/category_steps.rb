@@ -38,7 +38,7 @@ Then(/^I should see links to the categories$/) do
 end
 
 When(/^I create a new category with an existing name$/) do
-  FactoryGirl::create(:category, name: 'New Category')
+  FactoryGirl::create(:category, name: 'New Category Name')
   step 'I create a new category'
 end
 

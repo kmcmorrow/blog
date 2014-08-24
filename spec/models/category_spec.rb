@@ -20,10 +20,10 @@ RSpec.describe Category, :type => :model do
   end
 
   describe "with duplicate name" do
-    before { FactoryGirl::create(:category) }
+    before { @category = FactoryGirl::create(:category) }
 
     it "should not be valid" do
-      category = Category.create(name: FactoryGirl::attributes_for(:category)[:name])
+      category = Category.create(name: @category.name)
       expect(category).to_not be_valid
     end
   end
