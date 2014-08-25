@@ -5,11 +5,13 @@ Given(/^there (?:are|is) (#{NUMBER}) categor(?:y|ies)$/) do |num_categories|
     category.articles << FactoryGirl::create(:article)
     @categories << category
   end
+  @category = @categories.first
 end
 
-Given(/^there is an article with (\d+) categories$/) do |num_categories|
+Given(/^there is an article with (\d+) categor(?:y|ies)$/) do |num_categories|
+  step "there are #{num_categories} categories"
   @article = FactoryGirl::create(:article, title: 'Article with categories')
-  3.times do |num|
+  num_categories.times do |num|
     @article.categories << @categories[num]
   end
 end
@@ -67,4 +69,12 @@ end
 
 Then(/^I should not see the category name$/) do
   expect(page).to_not have_content(FactoryGirl::attributes_for(:category)[:name])
+end
+
+When(/^I select the category$/) do
+  select @category.name
+end
+
+Then(/^I should see the category link$/) do
+  expect(page).to have_link(@category.name, category_path(@category))
 end

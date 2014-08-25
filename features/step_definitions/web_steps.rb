@@ -3,6 +3,7 @@ Given(/^there (?:are|is) (\d+) published articles?$/) do |num_articles|
   Integer(num_articles).times do |n| 
     @articles << FactoryGirl.create(:article, title: "Article#{n}")
   end
+  @article = @articles.first
 end
 
 Given(/^I (?:am on|visit) (.*)$/) do |page|
@@ -16,8 +17,9 @@ Given(/^I (?:am on|visit) (.*)$/) do |page|
   when 'the articles page'
     visit '/articles'
   when 'the article page'
-    @article ||= @articles.first
     visit article_path(@article)
+  when 'the edit article page'
+    visit edit_article_path(@article)
   when 'the categories page'
     visit '/categories'
   else
