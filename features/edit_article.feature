@@ -23,13 +23,12 @@ Feature: Edit an article
     And I select the category
     And I click the "Update" button
     Then I should be on the article page
-    Then show me the page
     And I should see the category link
 
   Scenario: Remove a category
     Given there is an article with 1 category
     When I visit the edit article page
-    And I deselect the category
+    And I unselect the category
     And I click the "Update" button
     Then I should be on the article page
     And I should not see the category link

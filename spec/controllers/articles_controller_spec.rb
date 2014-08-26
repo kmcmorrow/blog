@@ -228,6 +228,30 @@ RSpec.describe ArticlesController, :type => :controller do
           end
         end
       end
+
+      describe "when selecting a category" do
+        it "adds the article to the category" do
+          @category = FactoryGirl::create(:category)
+          put :update, id: @article.id, article: {
+            categories: @article.category_ids << @category.id }
+
+          expect(@article.categories).to include(@category)
+        end
+      end
+
+      describe "when deselecting a category" do
+        before do
+          @article_with_categories =
+            FactoryGirl::create(:article_with_categories)
+        end
+        
+        it "removes the article from the category" do
+          expect do
+            put :update, id: @article_with_categories.id, article: {
+              categories: @article_with_categories.categories[0...-1] }
+          end.to change(@article_with_categories.categories, :count).by(-1)
+        end
+      end
     end
 
     describe "when not logged in" do

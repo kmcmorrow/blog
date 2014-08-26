@@ -10,15 +10,13 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @article = Article.new(article_params)
-
     if params[:article][:categories]
-      category_ids = params[:article][:categories].reject(&:empty?).map(&:to_i)
-      category_ids.each do |category_id|
-        category = Category.find(category_id.to_i)
-        @article.categories << category
-      end
+      categories = Category.find(params[:article][:categories].reject(&:empty?))
+    else
+      categories = []
     end
+
+    @article = Article.new(article_params.merge({ categories: categories }))
     
     if @article.save
       flash[:success] = "Article created"
@@ -46,7 +44,14 @@ class ArticlesController < ApplicationController
 
   def update
     @article = Article.find(params[:id])
-    if @article.update_attributes(article_params)
+
+    if params[:article][:categories]
+      categories = Category.find(params[:article][:categories].reject(&:empty?))
+    else
+      categories = @article.categories
+    end
+
+    if @article.update_attributes(article_params.merge({ categories: categories}))
       flash[:success] = 'Article updated'
       redirect_to @article
     else

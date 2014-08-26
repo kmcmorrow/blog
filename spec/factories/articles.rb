@@ -10,5 +10,12 @@ FactoryGirl.define do
         create_list(:comment, 1, article: article)
       end
     end
+
+    factory :article_with_categories do
+      after(:create) do |article|
+        article.categories << create_list(:category, 3)
+      end
+    end
   end
+
 end

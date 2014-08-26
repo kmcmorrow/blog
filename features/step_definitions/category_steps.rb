@@ -75,6 +75,14 @@ When(/^I select the category$/) do
   select @category.name
 end
 
+When(/^I unselect the category$/) do
+  unselect @category.name
+end
+
 Then(/^I should see the category link$/) do
   expect(page).to have_link(@category.name, category_path(@category))
+end
+
+Then(/^I should not see the category link$/) do
+  expect(page).to_not have_link(@category.name, category_path(@category))
 end
