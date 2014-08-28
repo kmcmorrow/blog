@@ -9,7 +9,7 @@ Feature: View categories
   Scenario: View categories
     Given I am on the homepage
     When I click "Categories"
-    Then I should see 5 categories
+    Then I should see all the categories
 
   Scenario: View all articles in a category
     Given I am on the categories page

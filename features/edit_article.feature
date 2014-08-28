@@ -26,9 +26,9 @@ Feature: Edit an article
     And I should see the category link
 
   Scenario: Remove a category
-    Given there is an article with 1 category
+    Given there is an article with 2 categories
     When I visit the edit article page
-    And I unselect the category
+    And I unselect the first category
     And I click the "Update" button
     Then I should be on the article page
-    And I should not see the category link
+    And I should only see a link to the other category

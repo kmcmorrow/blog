@@ -1,8 +1,7 @@
 Given(/^there (?:are|is) (#{NUMBER}) categor(?:y|ies)$/) do |num_categories|
-  @categories = []
-  num_categories.times do |n|
-    category = FactoryGirl::create(:category,  name: "Category #{n}")
-    category.articles << FactoryGirl::create(:article)
+  @categories ||= []
+  (@categories.length...num_categories).each do |n|
+    category = FactoryGirl::create(:category)
     @categories << category
   end
   @category = @categories.first
@@ -17,12 +16,12 @@ Given(/^there is an article with (\d+) categor(?:y|ies)$/) do |num_categories|
 end
 
 When(/^I click on a category$/) do
-  click_link 'Category 0'
+  click_link @categories.first.name
 end
 
-Then(/^I should see (#{NUMBER}) categories$/) do |num_categories| 
-  num_categories.times do |n|
-    expect(page).to have_content("Category #{n}")
+Then(/^I should see all the categories$/) do
+  Category.all.each do |category|
+    expect(page).to have_link(category.name, category_path(category))
   end
 end
 
@@ -34,8 +33,8 @@ Then(/^I should see the articles in that category$/) do
 end
 
 Then(/^I should see links to the categories$/) do
-  3.times do |num|
-    expect(page).to have_link("Category #{num}")
+  @article.categories.each do |category|
+    expect(page).to have_link(category.name)
   end
 end
 
@@ -75,14 +74,18 @@ When(/^I select the category$/) do
   select @category.name
 end
 
-When(/^I unselect the category$/) do
-  unselect @category.name
+When(/^I unselect the first category$/) do
+  @removed_category = @categories.first
+  unselect @removed_category.name
 end
 
 Then(/^I should see the category link$/) do
   expect(page).to have_link(@category.name, category_path(@category))
 end
 
-Then(/^I should not see the category link$/) do
-  expect(page).to_not have_link(@category.name, category_path(@category))
+Then(/^I should only see a link to the other category$/) do
+  expect(page).to_not have_link(@removed_category.name,
+                                category_path(@removed_category))
+  expect(page).to have_link(@categories.last.name,
+                            category_path(@categories.last))
 end
