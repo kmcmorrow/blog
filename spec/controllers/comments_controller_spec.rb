@@ -60,9 +60,16 @@ RSpec.describe CommentsController, :type => :controller do
     end
 
     describe "when not logged in" do
-      it "redirects to the login page" do
+      before do
         delete :destroy, article_id: @article.id, id: @article.comments.first.id
+      end
+      
+      it "redirects to the login page" do
         expect(response).to redirect_to(login_path)
+      end
+
+      it "displays the error message" do
+        expect(flash[:error]).to match('You must be logged in to do that')
       end
     end
   end

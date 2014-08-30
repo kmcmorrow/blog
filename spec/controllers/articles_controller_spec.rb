@@ -53,51 +53,68 @@ RSpec.describe ArticlesController, :type => :controller do
   end
 
   describe "POST create" do
-    before { sign_in FactoryGirl::create(:user) }
+    describe "when logged in" do
+      before { sign_in FactoryGirl::create(:user) }
 
-    describe "when successful" do
-      it "redirects to the index" do
-        post :create, article: { title: 'New article', text: 'Some text' }
-        expect(response).to redirect_to(:articles)
-      end
-
-      it "creates a new article" do
-        expect do
+      describe "when successful" do
+        it "redirects to the index" do
           post :create, article: { title: 'New article', text: 'Some text' }
-        end.to change(Article, :count).by(1)
+          expect(response).to redirect_to(:articles)
+        end
+
+        it "creates a new article" do
+          expect do
+            post :create, article: { title: 'New article', text: 'Some text' }
+          end.to change(Article, :count).by(1)
+        end
+
+        describe "when assigning categories" do
+          before { 2.times { |n| FactoryGirl::create(:category) } }
+          
+          it "assigns categories to article" do
+            post :create, article: { title: 'New article', text: 'Some text',
+              categories: ['1', '2'] }
+
+            expect(Article.first.categories.count).to eq(2)
+          end
+        end
+
+        it "displays a success message" do
+          post :create, article: { title: 'New article', text: 'Some text' }
+          expect(flash[:success]).to match("Article created")
+        end
       end
-
-
-      describe "when assigning categories" do
-        before { 2.times { |n| FactoryGirl::create(:category) } }
-        
-        it "assigns categories to article" do
-          post :create, article: { title: 'New article', text: 'Some text',
-            categories: ['1', '2'] }
-
-          expect(Article.first.categories.count).to eq(2)
+      
+      describe "when no title" do
+        it "displays error message" do
+          post :create, article: { text: 'Some text' }
+          expect(response).to render_template(:new)
+          expect(flash[:error]).to include("Title can't be blank")
         end
       end
 
-      it "displays a success message" do
-        post :create, article: { title: 'New article', text: 'Some text' }
-        expect(flash[:success]).to match("Article created")
-      end
-    end
-    
-    describe "when no title" do
-      it "displays error message" do
-        post :create, article: { text: 'Some text' }
-        expect(response).to render_template(:new)
-        expect(flash[:error]).to include("Title can't be blank")
+      describe "when no text" do
+        it "displays error message" do
+          post :create, article: { title: 'Some title' }
+          expect(response).to render_template(:new)
+          expect(flash[:error]).to include("Text can't be blank")
+        end
       end
     end
 
-    describe "when no text" do
-      it "displays error message" do
-        post :create, article: { title: 'Some title' }
-        expect(response).to render_template(:new)
-        expect(flash[:error]).to include("Text can't be blank")
+    describe "when not logged in" do
+      before { post :create, article: { title: 'Test', text: 'Not logged in' } }
+      
+      it "redirects to the login page" do
+        expect(response).to redirect_to(login_path)
+      end
+
+      it "should display the error message" do
+        expect(flash[:error]).to match('You must be logged in to do that')
+      end
+
+      it "should not create the article" do
+        expect(Article.count).to eq(0)
       end
     end
   end
@@ -112,9 +129,14 @@ RSpec.describe ArticlesController, :type => :controller do
         expect { delete :destroy, id: @article }.to_not change(Article, :count)
       end
 
-      it "should redirect to the homepage" do
+      it "should redirect to the login page" do
         delete :destroy, id: @article
-        expect(response).to redirect_to(root_path)
+        expect(response).to redirect_to(login_path)
+      end
+
+      it "should display the error message" do
+        delete :destroy, id: @article
+        expect(flash[:error]).to match('You must be logged in to do that')
       end
     end
 
@@ -156,16 +178,17 @@ RSpec.describe ArticlesController, :type => :controller do
     end
 
     describe "when not logged in" do
-      before { @article = FactoryGirl::create(:article) }
-      
-      it "redirects to the homepage" do
+      before do
+        @article = FactoryGirl::create(:article)
         get :edit, id: @article
+      end
+      
+      it "redirects to the login page" do
         expect(response).to redirect_to(login_path)
       end
 
-      it "doesn't assign the article" do
-        get :edit, id: @article
-        expect(assigns(:article)).to be_nil
+      it "should display the error message" do
+        expect(flash[:error]).to match('You must be logged in to do that')
       end
     end
   end
@@ -262,6 +285,10 @@ RSpec.describe ArticlesController, :type => :controller do
 
       it "redirects to the login page" do
         expect(response).to redirect_to(login_path)
+      end
+
+      it "shows an error message" do
+        expect(flash[:error]).to match('You must be logged in to do that')
       end
 
       it "doesn't change the article" do

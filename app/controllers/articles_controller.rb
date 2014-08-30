@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  before_action :require_login, only: [:new, :create, :edit, :update]
+  before_action :require_login, except: [:index, :show]
   
   def index
     @articles = Article.all.order('created_at DESC').page(params[:page]).per(5)
@@ -67,12 +67,8 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
-    if signed_in?
-      Article.delete params[:id]
-      redirect_to articles_path, flash: { success: 'Article deleted' }
-    else
-      redirect_to root_path
-    end
+    Article.delete params[:id]
+    redirect_to articles_path, flash: { success: 'Article deleted' }
   end
 
   private

@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :require_login, only: :destroy
+  before_action :require_login, except: :create
   
   def create
     @article = Article.find(params[:article_id])
