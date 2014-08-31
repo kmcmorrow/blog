@@ -1,4 +1,4 @@
-<%= link_to category.name, category %> 
+<%= link_to category.name, category %> (<%= category.articles.count %>)
 <% if signed_in? %>
 	(<%= link_to 'Edit', edit_category_path(category) %> |
 	<%= link_to 'Delete', category_path(category), method: :delete %>)
