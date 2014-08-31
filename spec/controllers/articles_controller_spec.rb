@@ -57,9 +57,9 @@ RSpec.describe ArticlesController, :type => :controller do
       before { sign_in FactoryGirl::create(:user) }
 
       describe "when successful" do
-        it "redirects to the index" do
+        it "redirects to the article page" do
           post :create, article: { title: 'New article', text: 'Some text' }
-          expect(response).to redirect_to(:articles)
+          expect(response).to redirect_to(article_path(Article.last))
         end
 
         it "creates a new article" do

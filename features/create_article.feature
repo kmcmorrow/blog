@@ -14,16 +14,15 @@ Feature: Create an article
   Scenario: Add a new article
     Given I am on the new article page
     And I add a new article
-    Then I should be on the articles page
+    Then I should be on the article page
     And I should see the new article
 
   Scenario: Create an article in a category
     Given there is 1 category
     And I am on the new article page
     And I add a new article in a category
-    Then I should be on the articles page
-    When I click on the article
-    Then I should see the article's category
+    Then I should be on the article page
+    And I should see the article's category
 
   Scenario: Redirect to login page when not logged in
     Given I am on the homepage

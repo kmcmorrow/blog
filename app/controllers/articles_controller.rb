@@ -20,7 +20,7 @@ class ArticlesController < ApplicationController
     
     if @article.save
       flash[:success] = "Article created"
-      redirect_to :articles
+      redirect_to @article
     else
       flash.now[:error] ||= []
       if @article.title.blank?

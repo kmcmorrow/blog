@@ -48,7 +48,7 @@ end
 
 Then(/^I should see the new article$/) do
   article = FactoryGirl::attributes_for(:article)
-  expect(page).to have_css('h2', text: article[:title])
+  expect(page).to have_css('h1', text: article[:title])
   expect(page).to have_content(article[:text])
 end
 
