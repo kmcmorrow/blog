@@ -5,14 +5,24 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-Article.create(title: 'Welcome!',
-               text: 'This is my first blog post in my new Ruby on Rails blog.')
+User.create(email: 'admin@example.org',
+            password: 'password',
+            password_confirmation: 'password')
 
-Article.create(title: 'Second post!',
-               text: 'This is the follow-on from the first post. The second post.')
-Article.create(title: 'Third post!',
-               text: 'And now here is the third post.')
+8.times do |i|
+  Category.create name: Faker::Hacker.adjective.upcase
+end
 
-User.create(email: 'kevin@example.org',
-            password: 'secret',
-            password_confirmation: 'secret')
+15.times do |i|
+  article = Article.create(title: "#{Faker::Hacker.verb} the #{Faker::Hacker.noun}".titleize,
+                 text: Faker::Lorem.paragraphs(6).join("\n\n"),
+                 categories: Category.all.shuffle[0..rand(5)])
+
+  0..rand(10).times do |i|
+    article.comments << Comment.create(name: Faker::Name.name,
+                                       text: Faker::Lorem.paragraph(rand(10)))
+  end
+  
+end
+
+
