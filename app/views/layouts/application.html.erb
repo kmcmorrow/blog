@@ -10,8 +10,13 @@
 	<%= render 'header' %>
 	<%= render 'navbar' %>
 	<div class="container-fluid">
+		<div id='side' class='col-md-3'>
+			<%= render 'categories_menu' %>
+		</div>
 		<%= render 'messages' %>
-		<%= yield %>
+		<div id='main' class='col-md-9'>
+			<%= yield %>
+		</div>
 	</div>
 	<footer>
 		<%= debug(params) if Rails.env.development? %>
