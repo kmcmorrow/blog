@@ -16,12 +16,16 @@ Given(/^there is an article with (\d+) categor(?:y|ies)$/) do |num_categories|
 end
 
 When(/^I click on a category$/) do
-  click_link @categories.first.name
+  within(:css, '#main') do
+    click_link @categories.first.name
+  end
 end
 
 Then(/^I should see all the categories$/) do
   Category.all.each do |category|
-    expect(page).to have_link(category.name, category_path(category))
+    within(:css, '#main') do
+      expect(page).to have_link(category.name, category_path(category))
+    end
   end
 end
 
@@ -33,8 +37,10 @@ Then(/^I should see the articles in that category$/) do
 end
 
 Then(/^I should see links to the categories$/) do
-  @article.categories.each do |category|
-    expect(page).to have_link(category.name)
+  within(:css, '#main') do
+    @article.categories.each do |category|
+      expect(page).to have_link(category.name)
+    end
   end
 end
 
@@ -50,7 +56,9 @@ When(/^I create a new category$/) do
 end
 
 Then(/^I should see the new category$/) do
-  expect(page).to have_link('New Category Name', category_path(Category.last))
+  within(:css, '#main') do
+    expect(page).to have_link('New Category Name', category_path(Category.last))
+  end
 end
 
 When(/^I change the category name$/) do
@@ -59,7 +67,9 @@ When(/^I change the category name$/) do
 end
 
 Then(/^I should see the new category name$/) do
-  expect(page).to have_content('New Name')
+  within(:css, '#main') do
+    expect(page).to have_content('New Name')
+  end
 end
 
 Then(/^there should be (\d+) categor(?:y|ies)$/) do |number|
@@ -67,7 +77,9 @@ Then(/^there should be (\d+) categor(?:y|ies)$/) do |number|
 end
 
 Then(/^I should not see the category name$/) do
-  expect(page).to_not have_content(FactoryGirl::attributes_for(:category)[:name])
+  within(:css, '#main') do
+    expect(page).to_not have_content(FactoryGirl::attributes_for(:category)[:name])
+    end
 end
 
 When(/^I select the category$/) do
@@ -80,12 +92,16 @@ When(/^I unselect the first category$/) do
 end
 
 Then(/^I should see the category link$/) do
-  expect(page).to have_link(@category.name, category_path(@category))
+  within(:css, '#main') do
+    expect(page).to have_link(@category.name, category_path(@category))
+  end
 end
 
 Then(/^I should only see a link to the other category$/) do
-  expect(page).to_not have_link(@removed_category.name,
-                                category_path(@removed_category))
-  expect(page).to have_link(@categories.last.name,
-                            category_path(@categories.last))
+  within(:css, '#main') do
+    expect(page).to_not have_link(@removed_category.name,
+                                  category_path(@removed_category))
+    expect(page).to have_link(@categories.last.name,
+                              category_path(@categories.last))
+  end
 end
