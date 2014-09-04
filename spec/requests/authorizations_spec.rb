@@ -58,7 +58,7 @@ RSpec.describe "Authorizations", :type => :request do
             text: @article.text
           }
 
-          expect(response).to redirect_to(articles_path)
+          expect(response).to redirect_to(article_path(Article.last))
         end
       end
     end
