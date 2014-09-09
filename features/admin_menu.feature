@@ -8,8 +8,8 @@ Feature: Admin menu
     And I am on the homepage
     Then I should see the admin menu
     And it should contain these links:
-      | Add Article  |
-      | Add Category |
+      | New Article  |
+      | New Category |
 
   Scenario: Only visible to admin
     Given I am on the homepage

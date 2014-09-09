@@ -50,7 +50,7 @@ When(/^I create a new category with an existing name$/) do
 end
 
 When(/^I create a new category$/) do
-  click_link 'New category'
+  click_link 'New Category'
   fill_in 'Name', with: 'New Category Name'
   click_button 'Create Category'
 end
