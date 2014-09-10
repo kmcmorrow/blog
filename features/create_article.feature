@@ -30,3 +30,13 @@ Feature: Create an article
     When I visit the new article page
     Then I should be on the login page
 
+  Scenario Outline: Redirect back to last page when form is cancelled
+    Given I am on the <page>
+    And I click "New Article"
+    When I click "Cancel"
+    Then I should be on the <page>
+      Examples:
+        | page            |
+        | homepage        |
+        | articles page   |
+        | categories page |

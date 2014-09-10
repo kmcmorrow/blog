@@ -32,3 +32,11 @@ Feature: Edit an article
     And I click the "Update" button
     Then I should be on the article page
     And I should only see a link to the other category
+
+  Scenario: Redirect back to last page when form is cancelled
+    Given there is 1 published article
+    And I am on the article page
+    When I click "Edit article"
+    And I click "Cancel"
+    Then I should be on the article page
+
