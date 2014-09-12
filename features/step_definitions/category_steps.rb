@@ -7,6 +7,11 @@ Given(/^there (?:are|is) (#{NUMBER}) categor(?:y|ies)$/) do |num_categories|
   @category = @categories.first
 end
 
+Given(/^there is a category called "(.*)"$/) do |name|
+  @categories ||= []
+  @categories << FactoryGirl::create(:category, name: name)
+end
+
 Given(/^there is an article with (\d+) categor(?:y|ies)$/) do |num_categories|
   step "there are #{num_categories} categories"
   @article = FactoryGirl::create(:article, title: 'Article with categories')
@@ -21,11 +26,10 @@ When(/^I click on a category$/) do
   end
 end
 
-Then(/^I should see all the categories$/) do
-  Category.all.each do |category|
-    within(:css, '#main') do
-      expect(page).to have_link(category.name, category_path(category))
-    end
+Then(/^I should see all the categories in alphabetical order$/) do
+  category_names = Category.all.map(&:name).sort.join('.*?')
+  within(:css, '#main') do
+    expect(page.text).to match(category_names)
   end
 end
 
@@ -105,3 +109,12 @@ Then(/^I should only see a link to the other category$/) do
                               category_path(@categories.last))
   end
 end
+
+Then(/^I should see the category menu$/) do
+  within(:css, '#side') do
+    Category.all.each do |category|
+      expect(page).to have_link(category.name, category_path(category))
+    end
+  end
+end
+

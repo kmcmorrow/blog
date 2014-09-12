@@ -2,7 +2,7 @@ class CategoriesController < ApplicationController
   before_action :require_login, except: [:index, :show]
   
   def index
-    @categories = Category.all
+    @categories = Category.all.sort_alphabetically
   end
 
   def show

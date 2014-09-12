@@ -7,9 +7,11 @@ Feature: View categories
     Given there are 5 categories
 
   Scenario: View categories
-    Given I am on the homepage
+    Given there is a category called "ZZZ"
+    And there is a category called "AAA"
+    And I am on the homepage
     When I click "Categories"
-    Then I should see all the categories
+    Then I should see all the categories in alphabetical order
 
   Scenario: View all articles in a category
     Given I am on the categories page

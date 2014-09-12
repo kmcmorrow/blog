@@ -1,7 +1,7 @@
 <div id='categories-menu'>
 	<h2>Categories</h2>
 	<ul>
-		<% Category.all.each do |category| %>
+		<% Category.all.sort_alphabetically.each do |category| %>
 			<li><%= link_to category.name, category_path(category) %></li>
 		<% end %>
 	</ul>
