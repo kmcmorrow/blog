@@ -14,6 +14,8 @@ Given(/^I (?:am on|visit) (.*)$/) do |page|
     visit edit_article_path(@article)
   when 'the categories page'
     visit '/categories'
+  when 'the search page'
+    visit '/search'
   else
     raise 'Unknown page'
   end
