@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Article, :type => :model do
-  subject { Article.new }
   it { should respond_to :title }
   it { should respond_to :text }
   it { should respond_to :comments }
@@ -25,6 +24,23 @@ RSpec.describe Article, :type => :model do
     it "should not be valid" do
       article = Article.create(title: 'Hello')
       expect(article).to_not be_valid
+    end
+  end
+
+  describe "#containing_string" do
+    context "search titles" do
+      let(:article1) { FactoryGirl::create(:article, title: 'Article One') }
+      let(:article2) { FactoryGirl::create(:article, title: 'Article Two') }
+      let(:article3) { FactoryGirl::create(:article, title: 'Article Three') }
+      
+      it "should return matching articles" do
+        expect(Article.containing_string('One')).to include([article1])
+      end
+
+      it "should not include non-matching articles" do
+        expect(Article.containing_string('One')).not_to include([article2,
+                                                                 article3])
+      end
     end
   end
 end
