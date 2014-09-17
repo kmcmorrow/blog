@@ -34,12 +34,19 @@ RSpec.describe Article, :type => :model do
       let(:article3) { FactoryGirl::create(:article, title: 'Article Three') }
       
       it "should return matching articles" do
-        expect(Article.containing_string('One')).to include([article1])
+        expect(Article.containing_string('One')).to match_array([article1])
       end
 
       it "should not include non-matching articles" do
-        expect(Article.containing_string('One')).not_to include([article2,
-                                                                 article3])
+        expect(Article.containing_string('One')).not_to match_array([article2, article3])
+      end
+
+      it "should return all articles" do
+        expect(Article.containing_string('Article')).to match_array([article1, article2, article3])
+      end
+
+      it "should return nothing" do
+        expect(Article.containing_string('Invalid')).to be_empty
       end
     end
   end
