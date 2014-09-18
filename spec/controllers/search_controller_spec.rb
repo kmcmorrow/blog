@@ -19,20 +19,19 @@ RSpec.describe SearchController, :type => :controller do
 
     context "search for word in title" do
       before do
-        FactoryGirl::create(:article, title: 'Cats')
-        FactoryGirl::create(:article, title: 'Dogs')
-        FactoryGirl::create(:article, title: 'Cats & Dogs')
+        @article1 = FactoryGirl::create(:article, title: 'Cats')
+        @article2 = FactoryGirl::create(:article, title: 'Dogs')
+        @article3 = FactoryGirl::create(:article, title: 'Cats & Dogs')
       end
       
       it "displays correct results" do
         get 'search', q: 'Cats'
-        expect(response).to have_link('Cats')
-        expect(response).to have_link('Cats & Dogs')
+        expect(assigns(:results)).to include(@article1, @article3)
       end
 
       it "doesn't display incorrect results" do
         get 'search', q: 'Cats'
-        expect(response).not_to have_link('Dogs')
+        expect(assigns(:results)).not_to include(@article2)
       end
     end
   end

@@ -6,6 +6,6 @@ end
 
 When(/^I search for (.*?) then I should see (.*?)$/) do |keyword, titles|
   titles.split(',').map(&:strip).each do |title| 
-    expect(page).to have_content(title)
+    expect(page).to have_link(title)
   end
 end
