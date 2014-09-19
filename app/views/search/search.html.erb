@@ -1,6 +1,16 @@
 <% content_for :title, 'Search' %>
 <h1>Search</h1>
-<% @results.each do |result| %>
-  <h2><%= link_to result.title, article_path(result) %></h2>
-	<p><%= result.text %></p>
+<%= form_tag '/search', method: 'get' do %>
+	<%= text_field_tag :q %>
+	<%= submit_tag 'Search' %>
+<% end %>
+<br>
+<% if @results.empty? %>
+	No results
+<% else %>
+	<p>Search results for: <strong><%= params[:q] %></strong></p>
+	<% @results.each do |result| %>
+		<h2><%= link_to result.title, article_path(result) %></h2>
+		<p><%= result.text %></p>
+	<% end %>
 <% end %>
