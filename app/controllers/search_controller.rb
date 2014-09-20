@@ -1,5 +1,5 @@
 class SearchController < ApplicationController
   def search
-    @results = Article.containing_string(params[:q]) || []
+    @results = params[:q] ? Article.containing_string(params[:q]) : []
   end
 end

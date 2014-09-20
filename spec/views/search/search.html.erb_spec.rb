@@ -14,14 +14,31 @@ RSpec.describe "search/search.html.erb", :type => :view do
   end
 
   context "when no results" do
-    it "shows no results message" do
-      render
-      expect(rendered).to have_content('No results')
+    describe "when a query was made" do
+      before { params[:q] = 'Random' }
+      
+      it "shows no results message" do
+        render
+        expect(rendered).to have_content('No results')
+      end
+    end
+
+    describe "when no query" do
+      it "doesn't show the no results message" do
+        render
+        expect(rendered).not_to have_content('No results')
+      end
+
+      it "doesn't show the search terms" do
+        render
+        expect(rendered).not_to have_content('Search results for:')
+      end
     end
   end
 
   context "when results are found" do
     let(:article) { FactoryGirl::create(:article, title: 'Cat Story') }
+    let(:article2) { FactoryGirl::create(:article, title: 'Dog Story')}
     before do
       params[:q] = 'Cat'
       assign(:results, [article])
@@ -34,12 +51,17 @@ RSpec.describe "search/search.html.erb", :type => :view do
 
     it "shows the article titles" do
       render
-      expect(rendered).to have_css('h2', article.title)
+      expect(rendered).to have_css('h2', text: article.title)
     end
     
     it "shows the article text" do
       render
-      expect(rendered).to have_css('p', article.text)
+      expect(rendered).to have_css('p', text: article.text)
+    end
+
+    it "doesn't show non-matching article" do
+      render
+      expect(rendered).not_to have_css('h2', text: article2.title)
     end
   end
 end

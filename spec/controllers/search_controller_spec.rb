@@ -14,7 +14,7 @@ RSpec.describe SearchController, :type => :controller do
 
     it "assigns the results variable" do
       get 'search'
-      expect(assigns(:results)).to_not be_nil
+      expect(assigns(:results)).to be_empty
     end
 
     context "search for word in title" do

@@ -5,12 +5,14 @@
 	<%= submit_tag 'Search' %>
 <% end %>
 <br>
-<% if @results.empty? %>
-	No results
-<% else %>
-	<p>Search results for: <strong><%= params[:q] %></strong></p>
-	<% @results.each do |result| %>
-		<h2><%= link_to result.title, article_path(result) %></h2>
-		<p><%= result.text %></p>
+<% if params[:q] %>
+	<% if @results.empty? %>
+		No results
+	<% else %>
+		<p>Search results for: <strong><%= params[:q] %></strong></p>
+		<% @results.each do |result| %>
+			<h2><%= link_to result.title, article_path(result) %></h2>
+			<p><%= result.text %></p>
+		<% end %>
 	<% end %>
 <% end %>
