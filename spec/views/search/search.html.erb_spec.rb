@@ -54,9 +54,12 @@ RSpec.describe "search/search.html.erb", :type => :view do
       expect(rendered).to have_css('h2', text: article.title)
     end
     
-    it "shows the article text" do
+    it "shows the article text (truncated)" do
+      long_article = FactoryGirl::create(:article, title: 'Long Cat Story',
+                                         text: 'a' * 500)
+      assign(:results, [long_article])
       render
-      expect(rendered).to have_css('p', text: article.text)
+      expect(rendered).to have_css('p', text: /^a{197}\.{3}$/)
     end
 
     it "doesn't show non-matching article" do

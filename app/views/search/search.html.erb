@@ -12,7 +12,7 @@
 		<p>Search results for: <strong><%= params[:q] %></strong></p>
 		<% @results.each do |result| %>
 			<h2><%= link_to result.title, article_path(result) %></h2>
-			<p><%= result.text %></p>
+			<p><%= truncate result.text, length: 200 %></p>
 		<% end %>
 	<% end %>
 <% end %>
