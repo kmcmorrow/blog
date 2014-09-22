@@ -7,9 +7,6 @@
 		No results
 	<% else %>
 		<p>Search results for: <strong><%= params[:q] %></strong></p>
-		<% @results.each do |result| %>
-			<h2><%= link_to result.title, article_path(result) %></h2>
-			<p><%= truncate result.text, length: 200 %></p>
-		<% end %>
+		<%= render partial: 'search_result', collection: @results %>
 	<% end %>
 <% end %>
