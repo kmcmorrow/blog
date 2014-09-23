@@ -5,6 +5,7 @@ class Article < ActiveRecord::Base
   has_and_belongs_to_many :categories
 
   def self.containing_string(search_string)
-    where("title LIKE ?", "%#{search_string}%")
+    where("title LIKE ? OR text LIKE ?",
+          "%#{search_string}%", "%#{search_string}%")
   end
 end

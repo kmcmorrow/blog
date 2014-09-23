@@ -18,20 +18,42 @@ RSpec.describe SearchController, :type => :controller do
     end
 
     context "search for word in title" do
-      before do
-        @article1 = FactoryGirl::create(:article, title: 'Cats')
-        @article2 = FactoryGirl::create(:article, title: 'Dogs')
-        @article3 = FactoryGirl::create(:article, title: 'Cats & Dogs')
-      end
+      let(:article1) { FactoryGirl::create(:article, title: 'Cats') }
+      let(:article2) { FactoryGirl::create(:article, title: 'Dogs') }
+      let(:article3) { FactoryGirl::create(:article, title: 'Cats & Dogs') }
       
-      it "displays correct results" do
+      it "returns correct results" do
         get 'search', q: 'Cats'
-        expect(assigns(:results)).to include(@article1, @article3)
+        expect(assigns(:results)).to include(article1, article3)
       end
 
-      it "doesn't display incorrect results" do
+      it "doesn't return incorrect results" do
         get 'search', q: 'Cats'
-        expect(assigns(:results)).not_to include(@article2)
+        expect(assigns(:results)).not_to include(article2)
+      end
+    end
+
+    context "search for word in text" do
+      let(:article1) { FactoryGirl::create(:article,
+                                           text: 'Cats have four legs') }
+      let(:article2) { FactoryGirl::create(:article,
+                                           text: 'Dogs have four legs') }
+      let(:article3) { FactoryGirl::create(:article,
+                                           text: 'I like turtles') }
+
+      it "returns articles with matching word" do
+        get 'search', q: 'Dogs'
+        expect(assigns(:results)).to include(article2)
+      end
+
+      it "returns articles with multiple matching words" do
+        get 'search', q: 'have four'
+        expect(assigns(:results)).to include(article1, article2)
+      end
+
+      it "doesn't return articles with no matching word" do
+        get 'search', q: 'have four'
+        expect(assigns(:results)).not_to include(article3)
       end
     end
   end
