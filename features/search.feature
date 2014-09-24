@@ -3,17 +3,37 @@ Feature: Search
   In order to find the article I am looking for
   I would like to search all articles for some keywords
 
-  Scenario Outline: Search for an article title
+  Background:
     Given the following articles exist
       | title       | text              |
       | First Post  | Hello world       |
       | Second Post | Some content      |
       | Third Post  | Some more content |
-    And I am on the search page
-    When I search for <keyword> then I should see <titles>
+
+  Scenario Outline: Search for an article title
+    Given I am on the search page
+    When I search for "<keyword>"
+    Then I should see link "<title>"
     Examples:
-      | keyword | titles                              |
-      | First   | First Post                          |
-      | Second  | Second Post                         |
-      | Third   | Third Post                          |
-      | Post    | First Post, Second Post, Third Post |
+      | keyword | title       |
+      | First   | First Post  |
+      | Second  | Second Post |
+      | Third   | Third Post  |
+      | Post    | First Post  |
+      | Post    | Second Post |
+      | Post    | Third Post  |
+
+  Scenario Outline: Search for article text
+    Given I am on the search page
+    When I search for "<keyword>"
+    Then I should see link "<title>"
+    Examples:
+      | keyword | title       |
+      | Hello   | First Post  |
+      | content | Second Post |
+      | content | Third Post  |
+
+  Scenario: No results
+    Given I am on the search page
+    When I search for "Computer"
+    Then I should see "No results"

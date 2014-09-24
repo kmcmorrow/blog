@@ -66,3 +66,11 @@ end
 Then(/^I should see the message: "(.*?)"$/) do |message|
   expect(page).to have_content(message)  
 end
+
+Then(/^I should see "(.*?)"$/) do |content|
+  expect(page).to have_content(content)
+end
+
+Then(/^I should see link "(.*?)"$/) do |link|
+  expect(page).to have_link(link)
+end

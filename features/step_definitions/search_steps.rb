@@ -4,10 +4,7 @@ Given(/^the following articles exist$/) do |table|
   end
 end
 
-When(/^I search for (.*?) then I should see (.*?)$/) do |keyword, titles|
+When(/^I search for "(.*?)"$/) do |keyword|
   fill_in 'q', with: keyword
   click_button 'Search'
-  titles.split(',').map(&:strip).each do |title| 
-    expect(page).to have_link(title)
-  end
 end
