@@ -37,3 +37,10 @@ Feature: Search
     Given I am on the search page
     When I search for "Computer"
     Then I should see "No results"
+
+  Scenario: Using the search box in the menu
+    Given I am on the homepage
+    Then I should see the search box
+    When I search for a word in the sidebar
+    Then I should be on the search page
+    And I should see link "First Post"
