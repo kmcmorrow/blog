@@ -44,3 +44,8 @@ Feature: Search
     When I search for a word in the sidebar
     Then I should be on the search page
     And I should see link "First Post"
+
+  Scenario: Search link in nav bar
+    Given I am on the homepage
+    When I click "Search"
+    Then I should be on the search page
