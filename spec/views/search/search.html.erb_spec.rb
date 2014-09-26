@@ -59,7 +59,7 @@ RSpec.describe "search/search.html.erb", :type => :view do
                                          text: 'a' * 500)
       assign(:results, [long_article])
       render
-      expect(rendered).to have_css('p', text: /^a{197}\.{3}$/)
+      expect(rendered).to have_css('p', text: /^a{197}\.{3}more$/)
     end
 
     it "doesn't show non-matching article" do
