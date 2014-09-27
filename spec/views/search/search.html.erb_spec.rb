@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe "search/search.html.erb", :type => :view do
-  before { assign(:results, []) }
+  before { assign(:results,
+                  Kaminari.paginate_array([]).page(params[:page]).per(10)) }
 
   it "shows a search field" do
     render
@@ -41,7 +42,7 @@ RSpec.describe "search/search.html.erb", :type => :view do
     let(:article2) { FactoryGirl::create(:article, title: 'Dog Story')}
     before do
       params[:q] = 'Cat'
-      assign(:results, [article])
+      assign(:results, Kaminari.paginate_array([article]).page(params[:page]).per(10))
     end
     
     it "shows search terms used" do
@@ -57,7 +58,7 @@ RSpec.describe "search/search.html.erb", :type => :view do
     it "shows the article text (truncated)" do
       long_article = FactoryGirl::create(:article, title: 'Long Cat Story',
                                          text: 'a' * 500)
-      assign(:results, [long_article])
+      assign(:results, Kaminari.paginate_array([long_article]).page(params[:page]).per(10))
       render
       expect(rendered).to have_css('p', text: /^a{197}\.{3}more$/)
     end

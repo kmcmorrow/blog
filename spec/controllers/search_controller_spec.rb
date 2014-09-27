@@ -17,7 +17,7 @@ RSpec.describe SearchController, :type => :controller do
       expect(assigns(:results)).to be_empty
     end
 
-    context "search for word in title" do
+    describe "search for word in title" do
       let(:article1) { FactoryGirl::create(:article, title: 'Cats') }
       let(:article2) { FactoryGirl::create(:article, title: 'Dogs') }
       let(:article3) { FactoryGirl::create(:article, title: 'Cats & Dogs') }
@@ -33,7 +33,7 @@ RSpec.describe SearchController, :type => :controller do
       end
     end
 
-    context "search for word in text" do
+    describe "search for word in text" do
       let(:article1) { FactoryGirl::create(:article,
                                            text: 'Cats have four legs') }
       let(:article2) { FactoryGirl::create(:article,
@@ -54,6 +54,22 @@ RSpec.describe SearchController, :type => :controller do
       it "doesn't return articles with no matching word" do
         get 'search', q: 'have four'
         expect(assigns(:results)).not_to include(article3)
+      end
+    end
+
+    describe "pagination" do
+      before do
+        12.times { FactoryGirl::create(:article) }
+      end
+
+      it "returns 10 results" do
+        get 'search', q: ''
+        expect(assigns(:results).size).to eq(10)
+      end
+
+      it "returns the remaining 2 on the next page" do
+        get 'search', q: '', page: 2
+        expect(assigns(:results).size).to eq(2)
       end
     end
   end

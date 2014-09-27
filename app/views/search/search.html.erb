@@ -9,4 +9,7 @@
 		<p>Search results for: <strong><%= params[:q] %></strong></p>
 		<%= render partial: 'search_result', collection: @results %>
 	<% end %>
+	<div class="text-center">
+		<%= paginate @results %>
+	</div>
 <% end %>
