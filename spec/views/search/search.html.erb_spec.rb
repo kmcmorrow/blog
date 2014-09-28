@@ -55,12 +55,12 @@ RSpec.describe "search/search.html.erb", :type => :view do
       expect(rendered).to have_css('h2', text: article.title)
     end
     
-    it "shows the article text (truncated)" do
+    it "shows the article text (truncated to 300 chars)" do
       long_article = FactoryGirl::create(:article, title: 'Long Cat Story',
-                                         text: 'a' * 500)
+                                         text: 'aaaa ' * 100)
       assign(:results, Kaminari.paginate_array([long_article]).page(params[:page]).per(10))
       render
-      expect(rendered).to have_css('p', text: /^a{197}\.{3}more$/)
+      expect(rendered).to have_css('p', text: /^(aaaa ){58}aaaa\.{3}more$/)
     end
 
     it "doesn't show non-matching article" do
