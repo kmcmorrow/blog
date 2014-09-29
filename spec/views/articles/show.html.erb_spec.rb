@@ -20,6 +20,11 @@ RSpec.describe "articles/show", :type => :view do
     expect(rendered).to have_content(article.text)
   end
 
+  it "shows the article date" do
+    render
+    expect(rendered).to have_content(article.created_at.strftime('%e %B %Y'))
+  end
+
   describe "the comments section" do
     describe "article comments" do
       it "displays the comment" do
@@ -71,8 +76,7 @@ RSpec.describe "articles/show", :type => :view do
     it "shows the articles categories" do
       render
       article.categories.each do |category|
-        expect(rendered).to have_link(category.name,
-                                      href: category_path(category))
+        expect(rendered).to have_link(category.name, href: category_path(category))
       end
     end
   end
