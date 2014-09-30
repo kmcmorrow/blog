@@ -1,28 +1,35 @@
-== README
+= README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A blog app built from scratch as a Rails learning project.
+The blog contains articles, categories and comments and a search feature.
+It is styled with Bootstrap.
+Integration tests written in Cucumber. Functional tests and unit tests written in RSpec.
 
-Things you may want to cover:
+== User Functionality
 
-* Ruby version
+=== Admin
+* Log in / out
+* Create / Edit / Delete articles
+* Create / Edit / Delete categories
+* Assign articles to multiple categories
+* Delete user comments
 
-* System dependencies
+=== Visitors
+* Comment on articles
+* Filter articles by category
+* Search articles by keyword
 
-* Configuration
+== Gems Used
 
-* Database creation
+=== Production
+* bootstrap-sass
+* kaminari
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+=== Testing / Development
+* cucumber-rails
+* database_cleaner
+* launchy
+* simplecov
+* rspec-rails
+* factory_girl_rails
+* faker
