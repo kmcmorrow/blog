@@ -5,6 +5,11 @@ RSpec.describe Article, :type => :model do
   it { should respond_to :text }
   it { should respond_to :comments }
   it { should respond_to :categories }
+  it { should respond_to :status }
+  it { should respond_to :draft! }
+  it { should respond_to :draft? }
+  it { should respond_to :published! }
+  it { should respond_to :published? }
 
   describe "with valid title and text" do
     it "should be valid" do
@@ -48,6 +53,18 @@ RSpec.describe Article, :type => :model do
       it "should return nothing" do
         expect(Article.containing_string('Invalid')).to be_empty
       end
+    end
+  end
+
+  describe "status" do
+    let(:new_article) { Article.new(title: 'Test', text: 'test') }
+    it "should be draft by default" do
+      expect(new_article).to be_draft
+    end
+
+    it "should change to published" do
+      new_article.published!
+      expect(new_article).to be_published
     end
   end
 end

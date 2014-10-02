@@ -4,6 +4,8 @@ class Article < ActiveRecord::Base
   has_many :comments
   has_and_belongs_to_many :categories
 
+  enum status: [:draft, :published]
+
   def self.containing_string(search_string)
     where("title LIKE ? OR text LIKE ?",
           "%#{search_string}%", "%#{search_string}%")
