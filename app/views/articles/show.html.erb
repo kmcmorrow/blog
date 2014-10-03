@@ -1,6 +1,11 @@
 <% content_for :title, @article.title %>
 <article>
 	<h1><%= @article.title %></h1>
+	<% if signed_in? %>
+		<p>
+			<%= @article.status.upcase %>
+		</p>
+	<% end %>
 	<p><%= time_tag @article.created_at, format: '%e %B %Y' %></p>
 	<ul>
 		<% @article.categories.each do |category| %>

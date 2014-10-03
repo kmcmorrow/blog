@@ -25,6 +25,42 @@ RSpec.describe "articles/show", :type => :view do
     expect(rendered).to have_content(article.created_at.strftime('%e %B %Y'))
   end
 
+  describe "when logged in" do
+    before { sign_in FactoryGirl::create(:user) }
+    
+    it "shows an edit link" do
+      render
+      expect(rendered).to have_link('Edit article', edit_article_path(article))
+    end
+
+    it "shows a delete link" do
+      render
+      expect(rendered).to have_link('Delete article', article_path(article))
+    end
+
+    it "shows the status" do
+      render
+      expect(rendered).to have_content('DRAFT')
+    end
+  end
+
+  describe "when not logged in" do
+    it "doesn't show an edit link" do
+      render
+      expect(rendered).not_to have_link('Edit article', edit_article_path(article))
+    end
+
+    it "doesn't show a delete link" do
+      render
+      expect(rendered).not_to have_link('Delete article', article_path(article))
+    end
+
+    it "doesn't show the status" do
+      render
+      expect(rendered).not_to have_content('PUBLISHED')
+    end
+  end
+
   describe "the comments section" do
     describe "article comments" do
       it "displays the comment" do
