@@ -38,9 +38,30 @@ RSpec.describe "articles/show", :type => :view do
       expect(rendered).to have_link('Delete article', article_path(article))
     end
 
-    it "shows the status" do
-      render
-      expect(rendered).to have_content('DRAFT')
+    context "when article is published" do
+      before { article.published! }
+      
+      it "shows the published status" do
+        render
+        expect(rendered).to have_content('PUBLISHED')
+      end
+      
+      it "show a link to unpublish" do
+        render
+        expect(rendered).to have_link('Unpublish', publish_article_path(article))
+      end
+    end
+
+    context "when article is a draft" do
+      it "shows the draft status" do
+        render
+        expect(rendered).to have_content('DRAFT')
+      end
+      
+      it "shows a link to publish" do
+        render
+        expect(rendered).to have_link('Publish', publish_article_path(article))
+      end
     end
   end
 

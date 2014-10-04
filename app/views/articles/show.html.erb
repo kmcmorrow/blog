@@ -4,6 +4,11 @@
 	<% if signed_in? %>
 		<p>
 			<%= @article.status.upcase %>
+			<% if @article.published? %>
+				<%= link_to 'Unpublish', publish_article_path(@article)%>
+			<% else %>
+				<%= link_to 'Publish', publish_article_path(@article) %>
+			<% end %>
 		</p>
 	<% end %>
 	<p><%= time_tag @article.created_at, format: '%e %B %Y' %></p>

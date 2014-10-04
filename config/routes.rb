@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   resources :articles do
     resources :comments, only: [:create, :destroy]
+    put 'publish', on: :member
   end
   resources :sessions, only: [:new, :create, :destroy]
   resources :categories
