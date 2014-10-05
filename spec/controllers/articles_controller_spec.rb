@@ -298,4 +298,30 @@ RSpec.describe ArticlesController, :type => :controller do
       end
     end
   end
+
+  describe "PUT publish" do
+    let(:article) { FactoryGirl::create(:article) }
+
+    before { sign_in FactoryGirl::create(:user) }
+
+    it "redirects to the article show page" do
+      put :publish, id: article.id
+      expect(response).to redirect_to(article)
+    end
+    
+    context "when article is a draft" do
+      it "should publish the article" do
+        put :publish, id: article.id
+        expect(article.reload).to be_published
+      end
+    end
+
+    context "when article is published" do
+      it "should make the article a draft" do
+        article.published!
+        put :publish, id: article.id
+        expect(article.reload).to be_draft
+      end
+    end
+  end
 end

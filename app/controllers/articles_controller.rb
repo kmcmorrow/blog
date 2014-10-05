@@ -71,6 +71,16 @@ class ArticlesController < ApplicationController
     redirect_to articles_path, flash: { success: 'Article deleted' }
   end
 
+  def publish
+    article = Article.find params[:id]
+    if article.published?
+      article.draft!
+    else
+      article.published!
+    end
+    redirect_to article
+  end
+
   private
 
   def article_params

@@ -5,9 +5,9 @@
 		<p>
 			<%= @article.status.upcase %>
 			<% if @article.published? %>
-				<%= link_to 'Unpublish', publish_article_path(@article)%>
+				<%= link_to 'Unpublish', publish_article_path(@article), method: :put %>
 			<% else %>
-				<%= link_to 'Publish', publish_article_path(@article) %>
+				<%= link_to 'Publish', publish_article_path(@article), method: :put %>
 			<% end %>
 		</p>
 	<% end %>
