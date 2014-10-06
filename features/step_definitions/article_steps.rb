@@ -1,7 +1,11 @@
-Given(/^there (?:are|is) (\d+) published articles?$/) do |num_articles|
+Given(/^there (?:are|is) (\d+) (un)?published articles?$/) do |num_articles, unpublished|
   @articles = []
-  Integer(num_articles).times do |n| 
-    @articles << FactoryGirl.create(:article, title: "Article#{n}")
+  Integer(num_articles).times do |n|
+    if unpublished
+      @articles << FactoryGirl.create(:draft_article, title: "Article#{n}")
+    else
+      @articles << FactoryGirl.create(:article, title: "Article#{n}")
+    end
   end
   @article = @articles.first
 end
@@ -32,6 +36,10 @@ end
 When(/^I fill in new article content$/) do
   fill_in 'Title', with: 'Updated title'
   fill_in 'Text', with: 'Updated text'
+end
+
+When(/^I create a new article with published (un)?checked$/) do |unchecked| 
+  pending
 end
 
 Then(/^I should see (\d+) article(?:s)?$/) do |num_articles|

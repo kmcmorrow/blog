@@ -4,7 +4,7 @@ Feature: Draft and publish articles
   I would like set an articles status to published
 
   Background:
-    Given I am signed in
+    Given I am logged in
 
   Scenario: Create a draft article
     Given I am on the new article page
@@ -27,7 +27,7 @@ Feature: Draft and publish articles
 
   Scenario: Publish a draft article from the index page
     Given there is 1 unpublished article
-    And I am on the article index page
+    And I am on the articles page
     When I click "Publish"
     Then I should be on the article page
     Then I should see the text "PUBLISHED"

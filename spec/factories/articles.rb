@@ -4,6 +4,11 @@ FactoryGirl.define do
   factory :article do
     title 'New Article'
     text 'Welcome to the blog!'
+    status Article.statuses["published"]
+
+    factory :draft_article do
+      status Article.statuses["draft"]
+    end
 
     factory :article_with_comment do
       after(:create) do |article, evaluator|
