@@ -44,7 +44,7 @@ end
 
 Then(/^I should see (\d+) article(?:s)?$/) do |num_articles|
   Integer(num_articles).times do |n|
-    expect(page).to have_css('h2', text: "Article#{n}")
+    expect(page).to have_css('h1', text: "Article#{n}")
   end
 end
 

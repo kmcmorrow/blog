@@ -1,31 +1,5 @@
 <% content_for :title, @article.title %>
-<article>
-	<h1><%= @article.title %></h1>
-	<% if signed_in? %>
-		<p>
-			<%= @article.status.upcase %>
-			<% if @article.published? %>
-				<%= link_to 'Unpublish', publish_article_path(@article), method: :put %>
-			<% else %>
-				<%= link_to 'Publish', publish_article_path(@article), method: :put %>
-			<% end %>
-		</p>
-	<% end %>
-	<p><%= time_tag @article.created_at, format: '%e %B %Y' %></p>
-	<ul>
-		<% @article.categories.each do |category| %>
-		  <li><%= link_to category.name, category_path(category) %></li>
-		<% end %>
-	</ul>
-	<%= simple_format @article.text %>
-
-	<% if signed_in? %>
-		<br><br>
-		<%= link_to 'Edit article', edit_article_path(@article) %> | 
-		<%= link_to 'Delete article', @article, method: :delete,
-    data: { confirm: 'Are you sure?' } %>
-	<% end %>
-</article>
+<%= render @article %>
 <hr>
 <section>
 	<h2>Comments</h2>

@@ -20,68 +20,6 @@ RSpec.describe "articles/show", :type => :view do
     expect(rendered).to have_content(article.text)
   end
 
-  it "shows the article date" do
-    render
-    expect(rendered).to have_content(article.created_at.strftime('%e %B %Y'))
-  end
-
-  describe "when logged in" do
-    before { sign_in FactoryGirl::create(:user) }
-    
-    it "shows an edit link" do
-      render
-      expect(rendered).to have_link('Edit article', edit_article_path(article))
-    end
-
-    it "shows a delete link" do
-      render
-      expect(rendered).to have_link('Delete article', article_path(article))
-    end
-
-    context "when article is published" do
-      before { article.published! }
-      
-      it "shows the published status" do
-        render
-        expect(rendered).to have_content('PUBLISHED')
-      end
-      
-      it "show a link to unpublish" do
-        render
-        expect(rendered).to have_link('Unpublish', publish_article_path(article))
-      end
-    end
-
-    context "when article is a draft" do
-      it "shows the draft status" do
-        render
-        expect(rendered).to have_content('DRAFT')
-      end
-      
-      it "shows a link to publish" do
-        render
-        expect(rendered).to have_link('Publish', publish_article_path(article))
-      end
-    end
-  end
-
-  describe "when not logged in" do
-    it "doesn't show an edit link" do
-      render
-      expect(rendered).not_to have_link('Edit article', edit_article_path(article))
-    end
-
-    it "doesn't show a delete link" do
-      render
-      expect(rendered).not_to have_link('Delete article', article_path(article))
-    end
-
-    it "doesn't show the status" do
-      render
-      expect(rendered).not_to have_content('PUBLISHED')
-    end
-  end
-
   describe "the comments section" do
     describe "article comments" do
       it "displays the comment" do
@@ -121,19 +59,6 @@ RSpec.describe "articles/show", :type => :view do
       it "shows a submit button" do
         render
         expect(rendered).to have_css('input[type=submit]', 'Add Comment')
-      end
-    end
-  end
-
-  describe "with categories" do
-    before do
-      article.categories << FactoryGirl::create(:category)
-    end
-    
-    it "shows the articles categories" do
-      render
-      article.categories.each do |category|
-        expect(rendered).to have_link(category.name, href: category_path(category))
       end
     end
   end

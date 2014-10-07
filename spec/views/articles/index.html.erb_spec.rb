@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "articles/index", :type => :view do
-  describe "with 10 articles" do
+  describe "with 10 published articles" do
     before do
       articles = []
       15.times do |n|

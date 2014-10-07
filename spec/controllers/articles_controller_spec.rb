@@ -301,6 +301,7 @@ RSpec.describe ArticlesController, :type => :controller do
 
   describe "PUT publish" do
     let(:article) { FactoryGirl::create(:article) }
+    let(:draft_article) { FactoryGirl::create(:draft_article) }
 
     before { sign_in FactoryGirl::create(:user) }
 
@@ -311,14 +312,13 @@ RSpec.describe ArticlesController, :type => :controller do
     
     context "when article is a draft" do
       it "should publish the article" do
-        put :publish, id: article.id
-        expect(article.reload).to be_published
+        put :publish, id: draft_article.id
+        expect(draft_article.reload).to be_published
       end
     end
 
     context "when article is published" do
       it "should make the article a draft" do
-        article.published!
         put :publish, id: article.id
         expect(article.reload).to be_draft
       end
