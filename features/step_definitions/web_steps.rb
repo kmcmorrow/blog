@@ -67,7 +67,7 @@ Then(/^I should see the message: "(.*?)"$/) do |message|
   expect(page).to have_content(message)  
 end
 
-Then(/^I should see (?:the text )"(.*?)"$/) do |content|
+Then(/^I should see (?:the text )?"(.*?)"$/) do |content|
   expect(page).to have_content(content)
 end
 
