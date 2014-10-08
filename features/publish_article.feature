@@ -8,13 +8,13 @@ Feature: Draft and publish articles
 
   Scenario: Create a draft article
     Given I am on the new article page
-    When I create a new article with published unchecked
+    When I create a new article with draft chosen
     Then I should be on the article page
     And I should see the text "DRAFT"
 
   Scenario: Create a published article
     Given I am on the new article page
-    When I create a new article with published checked
+    When I create a new article with published chosen
     Then I should be on the article page
     And I should see the text "PUBLISHED"
 

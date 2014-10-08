@@ -19,6 +19,7 @@ When(/^I add a new article$/) do
   fill_in 'Title', with: article[:title]
   fill_in 'Text', with: article[:text]
   click_button 'Create'
+  step "I create a new article with published checked"
 end
 
 Given(/^I add a new article in a category$/) do
@@ -38,8 +39,12 @@ When(/^I fill in new article content$/) do
   fill_in 'Text', with: 'Updated text'
 end
 
-When(/^I create a new article with published (un)?checked$/) do |unchecked| 
-  pending
+When(/^I create a new article with (published|draft) chosen$/) do |status|
+  article = FactoryGirl::attributes_for(:article)
+  fill_in 'Title', with: article[:title]
+  fill_in 'Text', with: article[:text]
+  choose 'Published' if status == 'published'
+  click_button 'Create'
 end
 
 Then(/^I should see (\d+) article(?:s)?$/) do |num_articles|
