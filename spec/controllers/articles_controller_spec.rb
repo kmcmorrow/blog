@@ -58,13 +58,13 @@ RSpec.describe ArticlesController, :type => :controller do
 
       describe "when successful" do
         it "redirects to the article page" do
-          post :create, article: { title: 'New article', text: 'Some text' }
+          post :create, article: FactoryGirl::attributes_for(:article)
           expect(response).to redirect_to(article_path(Article.last))
         end
 
         it "creates a new article" do
           expect do
-            post :create, article: { title: 'New article', text: 'Some text' }
+            post :create, article: FactoryGirl::attributes_for(:article)
           end.to change(Article, :count).by(1)
         end
 
@@ -80,8 +80,22 @@ RSpec.describe ArticlesController, :type => :controller do
         end
 
         it "displays a success message" do
-          post :create, article: { title: 'New article', text: 'Some text' }
+          post :create, article: FactoryGirl::attributes_for(:article)
           expect(flash[:success]).to match("Article created")
+        end
+
+        describe "when draft chosen" do
+          it "creates a draft article" do
+            post :create, article: FactoryGirl::attributes_for(:draft_article)
+            expect(Article.last).to be_draft
+          end
+        end
+
+        describe "when published chosen" do
+          it "creates a published article" do
+            post :create, article: FactoryGirl::attributes_for(:article)
+            expect(Article.last).to be_published
+          end
         end
       end
       
@@ -103,7 +117,7 @@ RSpec.describe ArticlesController, :type => :controller do
     end
 
     describe "when not logged in" do
-      before { post :create, article: { title: 'Test', text: 'Not logged in' } }
+      before { post :create, article: FactoryGirl::attributes_for(:article) }
       
       it "redirects to the login page" do
         expect(response).to redirect_to(login_path)
