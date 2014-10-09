@@ -4,10 +4,10 @@ FactoryGirl.define do
   factory :article do
     title 'New Article'
     text 'Welcome to the blog!'
-    status Article.statuses["published"]
+    status 'published'
 
     factory :draft_article do
-      status Article.statuses["draft"]
+      status 'draft'
     end
 
     factory :article_with_comment do
