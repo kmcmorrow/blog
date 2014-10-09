@@ -19,7 +19,6 @@ When(/^I add a new article$/) do
   fill_in 'Title', with: article[:title]
   fill_in 'Text', with: article[:text]
   click_button 'Create'
-  step "I create a new article with published checked"
 end
 
 Given(/^I add a new article in a category$/) do
