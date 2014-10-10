@@ -78,7 +78,7 @@ class ArticlesController < ApplicationController
     else
       article.published!
     end
-    redirect_to article
+    redirect_to :back
   end
 
   private

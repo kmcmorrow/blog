@@ -317,11 +317,24 @@ RSpec.describe ArticlesController, :type => :controller do
     let(:article) { FactoryGirl::create(:article) }
     let(:draft_article) { FactoryGirl::create(:draft_article) }
 
-    before { sign_in FactoryGirl::create(:user) }
+    before do
+      sign_in FactoryGirl::create(:user) 
+      request.env['HTTP_REFERER'] = article_path(article)
+    end
 
-    it "redirects to the article show page" do
-      put :publish, id: article.id
-      expect(response).to redirect_to(article)
+    context "from the article show page" do
+      it "redirects to the article show page" do
+        put :publish, id: article.id
+        expect(response).to redirect_to(article)
+      end
+    end
+    
+    context "from the article index page" do
+      it "redirects to the article index page" do
+        request.env['HTTP_REFERER'] = articles_path
+        put :publish, id: article.id
+        expect(response).to redirect_to(articles_path)
+      end
     end
     
     context "when article is a draft" do

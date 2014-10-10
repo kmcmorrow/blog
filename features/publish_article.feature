@@ -29,5 +29,7 @@ Feature: Draft and publish articles
     Given there is 1 unpublished article
     And I am on the articles page
     When I click "Publish"
-    Then I should be on the article page
+    Then I should be on the articles page
     Then I should see the text "PUBLISHED"
+
+  Scenario: Can't publish when not logged in
