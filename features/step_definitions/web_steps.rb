@@ -1,23 +1,23 @@
-Given(/^I (?:am on|visit) (.*)$/) do |page|
+Given(/^I (?:am on|visit) the (.*)$/) do |page|
   case page
-  when 'the homepage'
+  when 'homepage'
     visit "/"
-  when 'the login page'
+  when 'login page'
     visit '/login'
-  when 'the new article page'
+  when 'new article page'
     visit '/articles/new'
-  when 'the articles page'
+  when 'articles page'
     visit '/articles'
-  when 'the article page'
+  when 'article page'
     visit article_path(@article)
-  when 'the edit article page'
+  when 'edit article page'
     visit edit_article_path(@article)
-  when 'the categories page'
+  when 'categories page'
     visit '/categories'
-  when 'the search page'
+  when 'search page'
     visit '/search'
   else
-    raise 'Unknown page'
+    raise "Unknown page: #{page}"
   end
 end
 
@@ -42,8 +42,18 @@ Then(/^I should be on the (.*)$/) do |page|
     expect(uri.path).to eq(login_path)
   when 'new article page'
     expect(uri.path).to eq(new_article_path)
+  when 'articles page'
+    expect(uri.path).to eq(articles_path)
   when 'article page'
     expect(uri.path).to eq(article_path(1))
+  when 'edit article page'
+    expect(uri.path).to eq(edit_article_path(1))
+  when 'categories page'
+    expect(uri.path).to eq(categories_path)
+  when 'search page'
+    expect(uri.path).to eq(search_path)
+  else
+    raise "Unknown page: #{page}"
   end
 end
 
