@@ -2,7 +2,12 @@ class ArticlesController < ApplicationController
   before_action :require_login, except: [:index, :show]
   
   def index
-    @articles = Article.all.order('created_at DESC').page(params[:page]).per(5)
+    if signed_in?
+      articles = Article.all
+    else
+      articles = Article.published
+    end
+    @articles = articles.order('created_at DESC').page(params[:page]).per(5)
   end
 
   def new

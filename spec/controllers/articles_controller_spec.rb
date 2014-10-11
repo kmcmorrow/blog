@@ -13,6 +13,28 @@ RSpec.describe ArticlesController, :type => :controller do
       get :index
       expect(assigns(:articles).size).to eq(5)
     end
+
+    describe "draft articles" do
+      before do
+        2.times { FactoryGirl::create(:article) }
+        2.times { FactoryGirl::create(:draft_article) }
+      end
+
+      context "when logged out" do
+        it "doesn't show draft articles" do
+          get :index
+          expect(assigns(:articles).size).to eq(2)
+        end
+
+        context "when logged in" do
+          it "shows draft articles" do
+            sign_in FactoryGirl::create(:user)
+            get :index
+            expect(assigns(:articles).size).to eq(4)
+          end
+        end
+      end
+    end
   end
   
   describe "GET show" do
