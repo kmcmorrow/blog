@@ -61,7 +61,7 @@ Then(/^I should see (notice|error): "(.*?)"$/) do |type, message|
   expect(page).to have_css(".alert", text: "#{message}")
 end
 
-Then(/^I should( not)? see a "(.*?)" link$/) do |not_see, link|
+Then(/^I should( not)? see (?:a|an) "(.*?)" link$/) do |not_see, link|
   if not_see
     expect(page).to_not have_link(link)
   else
@@ -77,8 +77,12 @@ Then(/^I should see the message: "(.*?)"$/) do |message|
   expect(page).to have_content(message)  
 end
 
-Then(/^I should see (?:the text )?"(.*?)"$/) do |content|
-  expect(page).to have_content(content)
+Then(/^I should( not)? see (?:the text )?"(.*?)"$/) do |not_see, content|
+  if not_see
+    expect(page).not_to have_content(content)
+  else
+    expect(page).to have_content(content)
+  end
 end
 
 Then(/^I should see link "(.*?)"$/) do |link|

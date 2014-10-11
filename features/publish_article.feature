@@ -31,5 +31,3 @@ Feature: Draft and publish articles
     When I click "Publish"
     Then I should be on the articles page
     Then I should see the text "PUBLISHED"
-
-  Scenario: Can't publish when not logged in

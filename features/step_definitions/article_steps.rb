@@ -58,6 +58,11 @@ Then(/^I should see the article$/) do
   expect(page).to have_content(article[:text])
 end
 
+Then(/^I should not see the article$/) do
+  expect(page).not_to have_css('h1', text: @article.title)
+  expect(page).not_to have_content(@article.text)
+end
+
 Then(/^I should see the new article$/) do
   article = FactoryGirl::attributes_for(:article)
   expect(page).to have_css('h1', text: article[:title])
