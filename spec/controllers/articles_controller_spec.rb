@@ -38,24 +38,45 @@ RSpec.describe ArticlesController, :type => :controller do
   end
   
   describe "GET show" do
-    before do
-      @article = FactoryGirl.create(:article)
-      get :show, id: @article
+    context "published article" do
+      let(:article) { FactoryGirl::create(:article) }
+      
+      before { get :show, id: article }
+      
+      it "renders the show template" do
+        expect(response).to render_template(:show)
+      end
+
+      it "assigns the article" do
+        expect(assigns(:article)).to be_valid
+      end
+
+      describe "article with comments" do
+        before { article.comments.create name: 'Tester', text: 'Nice article' }
+        
+        it "assigns the comments" do
+          expect(assigns(:article).comments).to_not be_empty
+        end
+      end
     end
     
-    it "renders the show template" do
-      expect(response).to render_template(:show)
-    end
-
-    it "assigns the article" do
-      expect(assigns(:article)).to be_valid
-    end
-
-    describe "article with comments" do
-      before { @article.comments.create name: 'Tester', text: 'Nice article' }
+    context "draft article" do
+      let(:article) { FactoryGirl::create(:draft_article) }
       
-      it "assigns the comments" do
-        expect(assigns(:article).comments).to_not be_empty
+      context "signed out" do
+        it "redirects to the homepage" do
+          get :show, id: article
+          expect(response).to redirect_to(root_url)
+        end
+      end
+
+      context "signed in" do
+        before { sign_in FactoryGirl::create(:user) }
+        
+        it "renders the show template" do
+          get :show, id: article
+          expect(response).to render_template(:show)
+        end
       end
     end
   end

@@ -40,6 +40,7 @@ class ArticlesController < ApplicationController
 
   def show
     @article = Article.find(params[:id])
+    redirect_to root_path if @article.draft? and !signed_in?
     @comment = Comment.new(name: 'Guest')
   end
 
