@@ -20,7 +20,17 @@ Given(/^there is an article with (\d+) categor(?:y|ies)$/) do |num_categories|
   end
 end
 
-When(/^I click on a category$/) do
+Given(/^there are (\d+) (published|draft) articles in the first category$/) do |number, status| 
+  number.times do
+    if status == 'published'
+      @categories.first.articles << FactoryGirl::create(:article)
+    else
+      @categories.first.articles << FactoryGirl::create(:draft_article)
+    end
+  end
+end
+
+When(/^I click on the first category$/) do
   within(:css, '#main') do
     click_link @categories.first.name
   end
@@ -33,10 +43,15 @@ Then(/^I should see all the categories in alphabetical order$/) do
   end
 end
 
-Then(/^I should see the articles in that category$/) do
+Then(/^I should( not)? see the (published |draft )?articles in the first category$/) do |not_see, status|
   @categories.first.articles.each do |article|
-    expect(page).to have_content(article.title)
-    expect(page).to have_content(article.text)
+    if !status || article.status == status.strip
+      if not_see
+        expect(page).not_to have_content(article.title)
+      else
+        expect(page).to have_content(article.title)
+      end
+    end
   end
 end
 
@@ -83,7 +98,7 @@ end
 Then(/^I should not see the category name$/) do
   within(:css, '#main') do
     expect(page).to_not have_content(FactoryGirl::attributes_for(:category)[:name])
-    end
+  end
 end
 
 When(/^I select the category$/) do

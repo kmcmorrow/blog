@@ -2,11 +2,12 @@
 
 FactoryGirl.define do
   factory :article do
-    title 'New Article'
+    title 'Published Article'
     text 'Welcome to the blog!'
     status 'published'
 
     factory :draft_article do
+      title 'Draft Article'
       status 'draft'
     end
 

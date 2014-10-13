@@ -15,18 +15,35 @@ RSpec.describe CategoriesController, :type => :controller do
   end
 
   describe "GET show" do
+    let(:category) { FactoryGirl::create(:category) }
+
     before do
-      FactoryGirl::create(:category_with_articles)
+      2.times { category.articles << FactoryGirl::create(:article) }
+      2.times { category.articles << FactoryGirl::create(:draft_article) }
     end
 
     it "assigns the category" do
-      get :show, id: 1
+      get :show, id: category.id
       expect(assigns(:category)).to_not be_nil
     end
 
-    it "displays the correct number of articles" do
-      get :show, id: 1
-      expect(assigns(:category).articles.size).to eq(Category.find(1).articles.count)
+    it "assigns the articles" do
+      get :show, id: category.id
+      expect(assigns(:articles)).to_not be_nil
+    end
+
+    it "shows two articles" do
+      get :show, id: category.id
+      expect(assigns(:articles).size).to eq(2)
+    end
+
+    context "when logged in" do
+      before { sign_in FactoryGirl::create(:user) }
+      
+      it "shows 4 articles" do
+        get :show, id: category.id
+        expect(assigns(:articles).size).to eq(4)
+      end
     end
   end
 

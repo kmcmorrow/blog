@@ -7,6 +7,11 @@ class CategoriesController < ApplicationController
 
   def show
     @category = Category.find(params[:id])
+    if signed_in?
+      @articles = @category.articles
+    else
+      @articles = @category.articles.published
+    end
   end
 
   def new

@@ -4,6 +4,7 @@ RSpec.describe "categories/show", :type => :view do
   describe "when articles exist" do
     before do
       assign(:category, FactoryGirl::create(:category_with_articles))
+      assign(:articles, [FactoryGirl::create(:article)])
     end
 
     it "renders the article partial" do

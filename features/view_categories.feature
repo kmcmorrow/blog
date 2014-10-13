@@ -13,10 +13,21 @@ Feature: View categories
     When I click "Categories"
     Then I should see all the categories in alphabetical order
 
-  Scenario: View all articles in a category
-    Given I am on the categories page
-    When I click on a category
-    Then I should see the articles in that category
+  Scenario: View all published articles in a category when logged out
+    Given there are 2 published articles in the first category
+    And there are 2 draft articles in the first category
+    And I am on the categories page
+    When I click on the first category
+    Then I should see the published articles in the first category
+    And I should not see the draft articles in the first category
+
+  Scenario: View all published and draft articles in a category when logged in
+    Given I am logged in
+    And there are 2 published articles in the first category
+    And there are 2 draft articles in the first category
+    And I am on the categories page
+    When I click on the first category
+    Then I should see the articles in the first category
 
   Scenario: View all of an articles categories on an article page
     Given there is an article with 3 categories
