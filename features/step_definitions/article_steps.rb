@@ -2,7 +2,7 @@ Given(/^there (?:are|is) (\d+) (un)?published articles?$/) do |num_articles, unp
   @articles = []
   Integer(num_articles).times do |n|
     if unpublished
-      @articles << FactoryGirl.create(:draft_article, title: "Article#{n}")
+      @articles << FactoryGirl.create(:draft_article, title: "Draft #{n}")
     else
       @articles << FactoryGirl.create(:article, title: "Article#{n}")
     end

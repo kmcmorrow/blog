@@ -11,6 +11,13 @@ When(/^I search for "(.*?)"$/) do |keyword|
   end
 end
 
+When(/^I search for the draft article$/) do
+  within('#main') do
+    fill_in 'q', with: 'Draft'
+    click_button 'Search'
+  end
+end
+
 When(/^I search for a word in the sidebar$/) do
   within('#side') do
     fill_in 'q', with: 'Hello'

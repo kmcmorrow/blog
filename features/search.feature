@@ -49,3 +49,9 @@ Feature: Search
     Given I am on the homepage
     When I click "Search"
     Then I should be on the search page
+
+  Scenario: Don't show draft articles in search results
+    Given there is 1 unpublished article
+    And I am on the search page
+    When I search for the draft article
+    Then I should see "No results"
