@@ -1,0 +1,21 @@
+$shade1: #2e2c24;
+$shade2: #4f4b3e;
+$shade3: #bfb696;
+$shade4: #fcf0c6;
+$shade5: #e5dae9;
+
+$text-color: $shade5;
+$body-bg: $shade1;
+$font-family-base: Courier, serif;
+$font-size-base: 16px;
+
+$navbar-inverse-bg: $shade2;
+$navbar-inverse-border: #777361;
+$navbar-inverse-color: $shade5;
+$navbar-inverse-link-color: $shade5;
+$navbar-inverse-link-hover-bg: #454236;
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+
