@@ -4,3 +4,10 @@ header {
 	text-align: center;
 	height: 8em;
 }
+
+#side {
+	padding-bottom: 20px;
+	border-radius: 0 5px 5px 0;
+	border: 1px solid $shade-border;
+	border-left : none;
+}
