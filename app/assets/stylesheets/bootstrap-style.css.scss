@@ -1,19 +1,15 @@
-$shade1: #2e2c24;
-$shade2: #4f4b3e;
-$shade3: #bfb696;
-$shade4: #fcf0c6;
-$shade5: #e5dae9;
+@import "colors";
 
-$text-color: $shade5;
-$body-bg: $shade1;
+$text-color: $shade-lightest;
+$body-bg: $shade-darkest;
 $font-family-base: Courier, serif;
 $font-size-base: 16px;
 
-$navbar-inverse-bg: $shade2;
-$navbar-inverse-border: #777361;
-$navbar-inverse-color: $shade5;
-$navbar-inverse-link-color: $shade5;
-$navbar-inverse-link-hover-bg: #454236;
+$navbar-inverse-bg: $shade-dark;
+$navbar-inverse-border: $shade-border;
+$navbar-inverse-color: $shade-lightest;
+$navbar-inverse-link-color: $shade-lightest;
+$navbar-inverse-link-hover-bg: $shade-hover-bg;
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
