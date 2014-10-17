@@ -4,12 +4,16 @@ $text-color: $shade-lightest;
 $body-bg: $shade-darkest;
 $font-family-base: Courier, serif;
 $font-size-base: 16px;
+$link-color: $shade-link;
 
 $navbar-inverse-bg: $shade-dark;
 $navbar-inverse-border: $shade-border;
 $navbar-inverse-color: $shade-lightest;
 $navbar-inverse-link-color: $shade-lightest;
 $navbar-inverse-link-hover-bg: $shade-hover-bg;
+
+$headings-font-family: Consolas, monospace;
+
 
 @import "bootstrap-sprockets";
 @import "bootstrap";

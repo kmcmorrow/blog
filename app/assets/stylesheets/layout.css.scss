@@ -10,4 +10,24 @@ header {
 	border-radius: 0 5px 5px 0;
 	border: 1px solid $shade-border;
 	border-left : none;
+
+	ul {
+		list-style: none;
+		padding-left: 0;
+		
+		li {
+			background-color: $shade-dark;
+			padding: 5px 5px 5px 10px;
+			margin: 0px 0px 2px 0px;
+
+			a:hover {
+				text-decoration: none;
+				color: $shade-lightest;
+			}
+		}
+
+		li:hover {
+			background-color: $shade-hover-bg;
+		}
+	}
 }
