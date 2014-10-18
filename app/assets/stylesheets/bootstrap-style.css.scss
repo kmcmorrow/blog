@@ -14,6 +14,13 @@ $navbar-inverse-link-hover-bg: $shade-hover-bg;
 
 $headings-font-family: Consolas, monospace;
 
+$btn-default-color: $shade-lightest;
+$btn-default-bg: $shade-dark;
+$btn-default-border: $shade-border;
+
+$input-bg: $shade-light;
+$input-border-focus: #FFF172;
+
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
