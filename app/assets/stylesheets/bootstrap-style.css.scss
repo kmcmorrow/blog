@@ -25,6 +25,16 @@ $state-info-text: $shade-darkest;
 $state-info-bg: $shade-light;
 $state-info-border: $shade-border;
 
+$pagination-color: $shade-lightest;
+$pagination-bg: $shade-dark;
+$pagination-border: $shade-border;
+$pagination-active-color: $shade-dark;
+$pagination-active-bg: $shade-light;
+$pagination-active-border: $shade-light;
+$pagination-hover-color: $shade-dark;
+$pagination-hover-bg: $shade-light;
+$pagination-hover-border: $shade-border;
+
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
