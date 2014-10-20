@@ -21,6 +21,9 @@ $btn-default-border: $shade-border;
 $input-bg: $shade-light;
 $input-border-focus: #FFF172;
 
+$state-info-text: $shade-darkest;
+$state-info-bg: $shade-light;
+$state-info-border: $shade-border;
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
