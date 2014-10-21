@@ -33,6 +33,12 @@ header {
 	}
 }
 
+#main {
+	h1:first-child {
+		margin-top: 0;
+	}
+}
+
 footer {
 	text-align: center;
 	margin-top: 30px;

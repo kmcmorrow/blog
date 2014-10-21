@@ -1,9 +1,6 @@
 <% content_for :title, 'Articles' %>
-<h1>Articles</h1>
-<%= render @articles %>
-
+<%= render partial: @articles, spacer_template: 'article_divider' %>
 <br><br>
 <div class="text-center">
 	<%= paginate @articles %>
 </div>
-	
