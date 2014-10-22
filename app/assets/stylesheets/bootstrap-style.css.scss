@@ -35,6 +35,14 @@ $pagination-hover-color: $shade-dark;
 $pagination-hover-bg: $shade-light;
 $pagination-hover-border: $shade-border;
 
+$list-group-bg: $shade-dark;
+$list-group-hover-bg: $shade-hover-bg;
+$list-group-border: $shade-border;
+$list-group-link-color: $shade-link;
+
+$badge-color: $shade-darkest;
+$badge-bg: $shade-link;
+
 @import "bootstrap-sprockets";
 @import "bootstrap";
 

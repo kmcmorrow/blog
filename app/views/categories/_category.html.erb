@@ -1,6 +1,8 @@
-<%= link_to category.name, category %> (<%= category.articles.count %>)
+<%= link_to category, class: 'list-group-item' do %>
+	<%= category.name %>
+	<span class="badge"><%= category.articles.count %></span>
+<% end %>
 <% if signed_in? %>
 	(<%= link_to 'Edit', edit_category_path(category) %> |
 	<%= link_to 'Delete', category_path(category), method: :delete %>)
 <% end %>
-<br>
