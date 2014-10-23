@@ -11,6 +11,6 @@ RSpec.describe "categories/_category.html.erb", :type => :view do
   it "shows the number of articles in the category" do
     4.times { @category.articles << FactoryGirl::create(:article) }
     render "categories/category", category: @category
-    expect(rendered).to have_content("(4)")
+    expect(rendered).to have_content("4")
   end
 end
