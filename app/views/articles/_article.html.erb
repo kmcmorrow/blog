@@ -1,14 +1,9 @@
 <article>
 	<h1><%= link_to article.title, article_path(article) %></h1>
-	
 	<% if signed_in? %>
 		<p>
 			<%= article.status.upcase %>
-			<% if article.published? %>
-				<%= link_to 'Unpublish', publish_article_path(article), method: :put %>
-			<% else %>
-				<%= link_to 'Publish', publish_article_path(article), method: :put %>
-			<% end %>
+			<%= admin_button(article) %>
 		</p>
 	<% end %>
 
@@ -21,11 +16,4 @@
 	</ul>
 
 	<%= simple_format article.text %>
-	
-	<% if signed_in? %>
-		<br><br>
-		<%= link_to 'Edit article', edit_article_path(article) %> | 
-		<%= link_to 'Delete article', article, method: :delete,
-    data: { confirm: 'Are you sure?' } %>
-	<% end %>
 </article>
