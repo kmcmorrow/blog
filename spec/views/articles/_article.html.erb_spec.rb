@@ -4,7 +4,17 @@ include SessionsHelper
 RSpec.describe "articles/_article", :type => :view do
   describe "rendering an article" do
     let(:article) { FactoryGirl::create(:article) }
-    before { render 'articles/article', article: article }
+
+    before do
+      controller.singleton_class.class_eval do
+        protected
+        def admin_button(article)
+          'article_admin_menu'
+        end
+        helper_method :admin_button
+      end
+      render 'articles/article', article: article
+    end
 
     it "should show the article title" do
       expect(rendered).to have_css('h1', text: article.title)
@@ -37,51 +47,14 @@ RSpec.describe "articles/_article", :type => :view do
         render 'articles/article', article: article
       end
 
-      it "shows an edit link" do
-        expect(rendered).to have_link('Edit article', edit_article_path(article))
-      end
-
-      it "shows a delete link" do
-        expect(rendered).to have_link('Delete article', article_path(article))
-      end
-
-      context "when article is published" do
-        before { article.published! }
-        
-        it "shows the published status" do
-          expect(rendered).to have_content('PUBLISHED')
-        end
-        
-        it "show a link to unpublish" do
-          expect(rendered).to have_link('Unpublish', publish_article_path(article))
-        end
-      end
-
-      context "when article is a draft" do
-        let(:draft_article) { FactoryGirl::create(:draft_article) }
-        before { render 'articles/article', article: draft_article }
-
-        it "shows the draft status" do
-          expect(rendered).to have_content('DRAFT')
-        end
-        
-        it "shows a link to publish" do
-          expect(rendered).to have_link('Publish', publish_article_path(article))
-        end
+      it "calls the admin_button helper" do
+        expect(rendered).to have_content('article_admin_menu')
       end
     end
 
     describe "when not logged in" do
-      it "doesn't show an edit link" do
-        expect(rendered).not_to have_link('Edit article', edit_article_path(article))
-      end
-
-      it "doesn't show a delete link" do
-        expect(rendered).not_to have_link('Delete article', article_path(article))
-      end
-
-      it "doesn't show the status" do
-        expect(rendered).not_to have_content('PUBLISHED')
+      it "doesn't call the admin_button helper" do
+        expect(rendered).not_to have_content('article_admin_menu')
       end
     end
   end

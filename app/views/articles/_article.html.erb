@@ -1,10 +1,7 @@
 <article>
 	<h1><%= link_to article.title, article_path(article) %></h1>
 	<% if signed_in? %>
-		<p>
-			<%= article.status.upcase %>
-			<%= admin_button(article) %>
-		</p>
+		<p><%= admin_button(article) %></p>
 	<% end %>
 
 	<p><%= time_tag article.created_at, format: '%e %B %Y' %></p>

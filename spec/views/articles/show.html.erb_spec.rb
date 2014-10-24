@@ -27,22 +27,6 @@ RSpec.describe "articles/show", :type => :view do
         expect(rendered).to have_content(article.comments.first.name)
         expect(rendered).to have_content(article.comments.first.text)
       end
-
-      describe "when logged in" do
-        before { sign_in FactoryGirl::create(:user) }
-        
-        it "has a delete link" do
-          render
-          expect(rendered).to have_link('Delete', href: article_comment_path(article.id, article.comments.first.id))
-        end
-      end
-
-      describe "when not logged in" do
-        it "has no delete link" do
-          render
-          expect(rendered).to_not have_link('Delete')
-        end
-      end
     end
     
     describe "new comment form" do
