@@ -1,9 +1,14 @@
-<h4><%= comment.name %></h4>
-<%= comment.text %>
-<br>
-<% if signed_in? %>
-	<%= link_to 'Delete comment', article_comment_path(@article.id, comment.id), method: :delete,
-  data: { confirm: 'Are you sure?' } %>
-<% end %>
-<br><br>
-  
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <% if signed_in? %>
+	    <%= link_to article_comment_path(@article.id, comment.id),
+        method: :delete, data: { confirm: 'Are you sure?' } do %>
+        <div class="btn btn-danger delete-comment">Delete</div>
+      <% end %>
+    <% end %>
+    <h4><%= comment.name %></h4>
+  </div>
+  <div class="panel-body">
+    <%= comment.text %>
+  </div>
+</div>

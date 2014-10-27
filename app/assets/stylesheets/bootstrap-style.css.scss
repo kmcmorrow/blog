@@ -43,6 +43,14 @@ $list-group-link-color: $shade-link;
 $badge-color: $shade-darkest;
 $badge-bg: $shade-link;
 
+
+$panel-bg: $shade-darkest;
+$panel-body-padding: 10px;
+$panel-heading-padding: 5px 10px;
+$panel-default-text: $shade-light;
+$panel-default-border: $shade-border;
+$panel-default-heading-bg: $shade-dark;
+
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
