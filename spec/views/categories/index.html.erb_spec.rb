@@ -7,14 +7,31 @@ RSpec.describe "categories/index.html.erb", :type => :view do
   describe "when categories exist" do
     before do
       @categories = []
-      5.times { |n| @categories << FactoryGirl::create(:category, name: "Category #{n}") }
+      5.times { |n| @categories << FactoryGirl::create(:category_with_articles,
+                                                       name: "Category #{n}") }
       assign(:categories, @categories)
     end
     
     it "displays links to each category" do
       render
-      5.times do |n|
-        expect(rendered).to have_link("Category #{n}", @categories[n])
+      @categories.each do |category| 
+        expect(rendered).to have_link(category.name, category)
+      end
+    end
+
+    context "with some draft articles" do
+      before do
+        @categories << FactoryGirl::create(:category, name: 'With Drafts')
+        5.times { @categories.last.articles << FactoryGirl::create(:draft_article) }
+        assign(:categories, @categories)
+      end
+
+      it "shows the number of published articles in each category" do
+        render
+        @categories.each do |category|
+          expect(rendered).to have_selector('span.badge',
+                                            text: category.articles.published.size)
+        end
       end
     end
     
