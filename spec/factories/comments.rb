@@ -2,8 +2,8 @@
 
 FactoryGirl.define do
   factory :comment do
-    name "MyString"
-    text "MyText"
+    name "Joe Tester"
+    text "A nice comment."
     article nil
   end
 end

@@ -1,12 +1,13 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     <% if signed_in? %>
-	    <%= link_to article_comment_path(@article.id, comment.id),
+	    <%= link_to article_comment_path(comment.article.id, comment.id),
         method: :delete, data: { confirm: 'Are you sure?' } do %>
         <div class="btn btn-danger delete-comment">Delete</div>
       <% end %>
     <% end %>
-    <h4><%= comment.name %></h4>
+    <h4 class="name"><%= comment.name %></h4>
+	  <%= time_tag comment.created_at, format: '%e %B %Y ~ %H:%M' %>
   </div>
   <div class="panel-body">
     <%= comment.text %>
