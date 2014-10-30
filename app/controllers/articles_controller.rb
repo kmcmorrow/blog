@@ -7,7 +7,7 @@ class ArticlesController < ApplicationController
     else
       articles = Article.published
     end
-    @articles = articles.order('created_at DESC').page(params[:page]).per(5)
+    @articles = articles.page(params[:page]).per(5)
   end
 
   def new

@@ -45,6 +45,17 @@ RSpec.describe CategoriesController, :type => :controller do
         expect(assigns(:articles).size).to eq(4)
       end
     end
+
+    it "shows newest articles first" do
+      category.articles =
+        [FactoryGirl::create(:article, title: 'Older',
+                             created_at: Date.new(2013, 01, 01)),
+         FactoryGirl::create(:article, title: 'Newer',
+                             created_at: Date.new(2014, 01, 01))]
+      get :show, id: category.id
+      expect(assigns(:articles).first.title).to eq('Newer')
+      expect(assigns(:articles).last.title).to eq('Older')
+    end
   end
 
   describe "GET new" do
