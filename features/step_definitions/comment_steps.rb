@@ -3,7 +3,7 @@ Given(/^there is an article with a comment$/) do
 end
 
 When(/^I delete the comment$/) do
-  find_link('Delete comment', href: article_comment_path(@article.id, @article.comments.first.id)).click
+  find_link('Delete', href: article_comment_path(@article.id, @article.comments.first.id)).click
 end
 
 When(/^I fill in a comment$/) do
