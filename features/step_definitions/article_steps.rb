@@ -46,12 +46,6 @@ When(/^I create a new article with (published|draft) chosen$/) do |status|
   click_button 'Create'
 end
 
-Then(/^I should see (\d+) article(?:s)?$/) do |num_articles|
-  Integer(num_articles).times do |n|
-    expect(page).to have_css('h1', text: "Article#{n}")
-  end
-end
-
 Then(/^I should see the article$/) do
   article = FactoryGirl::attributes_for(:article)
   expect(page).to have_css('h1', text: 'Article0')
@@ -80,4 +74,10 @@ end
 
 Then(/^I should see the article's category$/) do
   expect(page).to have_link(Category.first.name)
+end
+
+Then(/^I should see (\d+) articles?$/) do |number|
+  within(:css, '#main') do
+    expect(page).to have_selector('article', count: number)
+  end
 end

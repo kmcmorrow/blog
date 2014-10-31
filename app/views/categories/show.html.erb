@@ -1,2 +1,5 @@
 <h1><%= @category.name %></h1>
 <%= render partial: @articles, spacer_template: 'articles/article_divider' %>
+<div class="text-center">
+  <%= paginate @articles %>
+</div>

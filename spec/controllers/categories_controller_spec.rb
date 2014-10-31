@@ -56,6 +56,15 @@ RSpec.describe CategoriesController, :type => :controller do
       expect(assigns(:articles).first.title).to eq('Newer')
       expect(assigns(:articles).last.title).to eq('Older')
     end
+
+    it "shows 5 articles per page" do
+      articles = []
+      6.times { articles << FactoryGirl::create(:article) }
+      category.articles = articles
+
+      get :show, id: category.id
+      expect(assigns(:articles).size).to eq(5)
+    end
   end
 
   describe "GET new" do

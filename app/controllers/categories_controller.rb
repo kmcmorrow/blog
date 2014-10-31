@@ -8,10 +8,11 @@ class CategoriesController < ApplicationController
   def show
     @category = Category.find(params[:id])
     if signed_in?
-      @articles = @category.articles
+      articles = @category.articles
     else
-      @articles = @category.articles.published
+      articles = @category.articles.published
     end
+    @articles = articles.page(params[:page]).per(5)
   end
 
   def new

@@ -33,3 +33,11 @@ Feature: View categories
     Given there is an article with 3 categories
     When I visit the article page
     Then I should see links to the categories
+
+  Scenario: View 5 articles per page
+    Given there are 6 published articles in the first category
+    And I am on the categories page
+    When I click on the first category
+    Then I should see 5 articles
+    When I click "Next"
+    Then I should see 1 article

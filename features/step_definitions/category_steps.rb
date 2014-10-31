@@ -132,4 +132,3 @@ Then(/^I should see the category menu$/) do
     end
   end
 end
-
