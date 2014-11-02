@@ -1,13 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe "articles/index", :type => :view do
-  describe "with 10 published articles" do
+  context "with 10 published articles" do
     before do
       articles = []
       15.times do |n|
         articles << FactoryGirl::create(:article, title: "Article#{n}")
       end
-      assign(:articles, Kaminari.paginate_array(articles).page(params[:page]).per(5))
+      assign(:articles,
+             Kaminari.paginate_array(articles).page(params[:page]).per(5))
     end
     
     it "displays the first 5 articles" do
@@ -38,6 +39,20 @@ RSpec.describe "articles/index", :type => :view do
     it "shows pagination link for last page" do
       render
       expect(rendered).to have_link('Last', href: "#{articles_path}?page=3")
+    end
+  end
+
+  context "1 article with 5 comments" do
+    let(:article) { FactoryGirl::create(:article) }
+    before do
+      5.times { article.comments << FactoryGirl::create(:comment) }
+      assign(:articles,
+             Kaminari.paginate_array([article]).page(params[:page]).per(5))
+    end
+
+    it "shows the comment count" do
+      render
+      expect(rendered).to have_link('5 comments', article_path(article))
     end
   end
 end

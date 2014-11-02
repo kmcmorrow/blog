@@ -1,5 +1,6 @@
 <% content_for :title, 'Articles' %>
-<%= render partial: @articles, spacer_template: 'article_divider' %>
+<%= render partial: @articles, locals: { comment_count: true },
+  spacer_template: 'article_divider' %>
 <br><br>
 <div class="text-center">
 	<%= paginate @articles %>

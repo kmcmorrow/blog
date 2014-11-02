@@ -13,3 +13,8 @@
   </p>
 	<%= simple_format article.text %>
 </article>
+<div class="comment-count">
+  <% if local_assigns.has_key? :comment_count %>
+    <%= link_to "- #{article.comments.size} comments -", article_path(article) %>
+  <% end %>
+</div>
