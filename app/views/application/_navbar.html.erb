@@ -15,11 +15,15 @@
 
 		<div class="collapse navbar-collapse" id="navbar-collapse">
 			<ul class="nav navbar-nav">
-				<li><a href="<%= categories_path %>">Categories</a></li>
-				<li><a href="<%= search_path %>">Search</a></li>
+        <li class="<%= current?(categories_path) %>">
+          <%= link_to 'Categories', categories_path %>
+        </li>
+        <li class="<%= current?(search_path) %>">
+          <%= link_to 'Search', search_path %>
+        </li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li class="<%= 'active' if current_page?(login_path) %>">
+				<li class="<%= current?(login_path) %>">
 					<% if signed_in? %>
 						<%= link_to 'Log out', logout_path, method: :delete %>
 					<% else %>

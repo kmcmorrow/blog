@@ -7,4 +7,8 @@ module ApplicationHelper
     when 'alert' then 'alert alert-warning'
     end
   end
+
+  def current?(path)
+    'active' if current_page? path
+  end
 end
