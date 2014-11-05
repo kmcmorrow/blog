@@ -1,8 +1,12 @@
 <nav>
   <h2>Admin</h2>
   <ul>
-	  <li><%= link_to 'New Article', new_article_path %></li>
-	  <li><%= link_to 'New Category', new_category_path %></li>
+	  <%= link_to new_article_path do %>
+      <li class="<%= current?(new_article_path) %>">New Article</li>
+    <% end %>
+	  <%= link_to new_category_path do %>
+      <li class="<%= current?(new_category_path) %>">New Category</li>
+    <% end %>
   </ul>
 </nav>
 
